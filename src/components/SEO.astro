@@ -29,6 +29,7 @@ const {
 
 const jsonLdArray = Array.isArray(jsonLd) ? jsonLd : (jsonLd ? [jsonLd] : []);
 const hasOg = Boolean(ogImage);
+const absoluteOgImage = hasOg ? new URL(ogImage, site.url).toString() : undefined;
 
 const computedOgType: "website" | "article" = ogType ?? (canonical.includes("/blog/") ? "article" : "website");
 
@@ -48,7 +49,7 @@ const computedOgType: "website" | "article" = ogType ?? (canonical.includes("/bl
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
-{hasOg && <meta property="og:image" content={ogImage} />}
+{hasOg && <meta property="og:image" content={absoluteOgImage} />}
 {hasOg && ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
 <meta property="og:site_name" content={site.name} />
 <meta property="og:locale" content={site.locale} />
@@ -57,7 +58,7 @@ const computedOgType: "website" | "article" = ogType ?? (canonical.includes("/bl
 <meta name="twitter:card" content={hasOg ? "summary_large_image" : "summary"} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={ogDesc} />
-{hasOg && <meta name="twitter:image" content={ogImage} />}
+{hasOg && <meta name="twitter:image" content={absoluteOgImage} />}
 
 <link rel="icon" href={`${import.meta.env.BASE_URL}eyes_icon.svg`} type="image/svg+xml" />
 <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}eyes_icon.png`} />
