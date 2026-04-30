@@ -1,6 +1,7 @@
 :root{
-  --bg: #fbfbf9;
+  --bg: #ffffff;
   --fg: #1a1a1a;
+  --secondary: #ff7300;
   --muted: #5b5b5b;
   --link: #0b3d91;
   --border: rgba(0,0,0,.12);
