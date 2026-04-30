@@ -4,6 +4,10 @@ import ArticleCard from "../components/ArticleCard.astro";
 import { site } from "../content/site";
 import { articles } from "../content/articles";
 
+const articlesByNewest = [...articles].sort(
+  (a, b) => (b.publishedAt?.getTime() ?? 0) - (a.publishedAt?.getTime() ?? 0)
+);
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -28,7 +32,7 @@ const jsonLd = {
 
 
   <div class="article-grid">
-    {articles.map((article) => (
+    {articlesByNewest.map((article) => (
       <ArticleCard article={article} />
     ))}
   </div>

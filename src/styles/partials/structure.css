@@ -56,10 +56,11 @@ main {
 .header__brand{
   text-decoration:none;
   font-family: var(--font-sans);
-  font-size: clamp(1.125rem, 1rem + 0.4vw, 1.35rem);
+  font-size: clamp(2.125rem, 2rem + 0.4vw, 2.35rem);
   font-weight: 900;
   letter-spacing: -0.04em;
 }
+
 .header__nav{
   width: 100%;
 }
@@ -168,7 +169,7 @@ main {
   min-height: 420px;
   padding: 24px;
   border-radius: 16px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--link);
   background: #fff;
   text-decoration: none;
   color: inherit;
@@ -182,6 +183,7 @@ main {
 .article-card--published:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--link);
 }
 
 .article-card--published:hover .article-card__title {
@@ -197,6 +199,10 @@ main {
   color: var(--muted);
   display: block;
   margin-bottom: 6px;
+}
+
+.article-card--published:hover .article-card__number {
+  color: var(--link);
 }
 
 .article-card__date {

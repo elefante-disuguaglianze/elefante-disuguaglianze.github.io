@@ -3,7 +3,7 @@
   --fg: #1a1a1a;
   --secondary: #ff7300;
   --muted: #5b5b5b;
-  --link: #0b3d91;
+  --link: var(--secondary);
   --border: rgba(0,0,0,.12);
   --maxw: 900px;
   --space-1: 8px;
