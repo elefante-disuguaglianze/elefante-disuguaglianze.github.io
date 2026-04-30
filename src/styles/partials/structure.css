@@ -42,7 +42,7 @@ main {
   margin: 0 auto;
   padding: var(--space-3) var(--space-4);
   display:flex;
-  align-items:flex-start;
+  align-items:center;
   justify-content:space-between;
   gap: var(--space-3);
   flex-direction: column;
@@ -55,15 +55,27 @@ main {
 }
 .header__brand{
   text-decoration:none;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--font-sans);
+  font-size: clamp(1.125rem, 1rem + 0.4vw, 1.35rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+.header__nav{
+  width: 100%;
 }
 .nav{
   list-style:none;
   display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: var(--space-resp);
   padding:0;
   margin:0;
+  width: 100%;
+}
+.nav__item{
+  flex: 1 1 auto;
+  text-align: center;
 }
 .nav__link{
   text-decoration:none;
@@ -112,6 +124,19 @@ main {
   .page__main{
     padding-left: var(--space-4);
     padding-right: var(--space-4);
+  }
+
+  .nav{
+    width: auto;
+  }
+
+  .header__nav{
+    width: auto;
+  }
+
+  .nav__item{
+    flex: 0 0 auto;
+    text-align: left;
   }
 }
 
