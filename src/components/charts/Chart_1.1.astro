@@ -1,0 +1,337 @@
+---
+---
+
+<figure class="viz-figure" aria-label="Grafico a linee: reddito medio familiare in Italia">
+    <figcaption>
+      <strong>Reddito medio familiare netto</strong> — Nord, Centro e Sud Italia (2005–2023)
+      <br><small>Valori in migliaia di euro. Dati di esempio a scopo illustrativo.</small>
+    </figcaption>
+    <div id="chart-reddito" role="img" aria-label="Grafico a linee del reddito medio familiare per area geografica"></div>
+    <noscript>
+      <table>
+        <caption>Reddito medio familiare netto per area (migliaia di €)</caption>
+        <thead><tr><th>Anno</th><th>Nord</th><th>Centro</th><th>Sud</th></tr></thead>
+        <tbody>
+          <tr><td>2005</td><td>38.2</td><td>33.5</td><td>24.1</td></tr>
+          <tr><td>2010</td><td>39.8</td><td>34.2</td><td>24.7</td></tr>
+          <tr><td>2015</td><td>38.5</td><td>33.0</td><td>23.5</td></tr>
+          <tr><td>2020</td><td>39.1</td><td>33.8</td><td>23.9</td></tr>
+          <tr><td>2023</td><td>41.3</td><td>35.5</td><td>25.2</td></tr>
+        </tbody>
+      </table>
+    </noscript>
+  </figure>
+
+<div id="chart-tooltip-portal" class="chart-tooltip" aria-hidden="true"></div>
+
+<style>
+  .viz-figure {
+    margin: var(--space-5) 0;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .viz-figure figcaption {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .viz-figure figcaption strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--fg);
+    margin-bottom: var(--space-1);
+  }
+
+  #chart-reddito {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* Tooltip */
+  .chart-tooltip {
+    position: fixed;
+    background: var(--fg);
+    color: var(--bg);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.1s;
+    /* Viene inserito prima del footer via JS */
+  }
+
+  .chart-tooltip.visible {
+    opacity: 1;
+  }
+
+  /* Legend — :global() perché gli elementi sono creati dinamicamente via JS */
+  :global(.chart-legend) {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    font-family: var(--font-sans);
+  }
+
+  :global(.chart-legend__item) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--muted);
+  }
+
+  :global(.chart-legend__swatch) {
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+</style>
+
+<script type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+  // --- Dati di esempio ---
+  const serie = [
+    {
+      area: "Nord",
+      colore: "#0b3d91",
+      valori: [
+        { anno: 2005, reddito: 38.2 }, { anno: 2006, reddito: 38.8 },
+        { anno: 2007, reddito: 39.5 }, { anno: 2008, reddito: 39.1 },
+        { anno: 2009, reddito: 38.3 }, { anno: 2010, reddito: 39.8 },
+        { anno: 2011, reddito: 39.4 }, { anno: 2012, reddito: 38.0 },
+        { anno: 2013, reddito: 37.5 }, { anno: 2014, reddito: 37.9 },
+        { anno: 2015, reddito: 38.5 }, { anno: 2016, reddito: 39.0 },
+        { anno: 2017, reddito: 39.7 }, { anno: 2018, reddito: 40.1 },
+        { anno: 2019, reddito: 40.5 }, { anno: 2020, reddito: 39.1 },
+        { anno: 2021, reddito: 40.0 }, { anno: 2022, reddito: 40.8 },
+        { anno: 2023, reddito: 41.3 },
+      ],
+    },
+    {
+      area: "Centro",
+      colore: "#c0392b",
+      valori: [
+        { anno: 2005, reddito: 33.5 }, { anno: 2006, reddito: 33.9 },
+        { anno: 2007, reddito: 34.5 }, { anno: 2008, reddito: 34.1 },
+        { anno: 2009, reddito: 33.4 }, { anno: 2010, reddito: 34.2 },
+        { anno: 2011, reddito: 34.0 }, { anno: 2012, reddito: 33.0 },
+        { anno: 2013, reddito: 32.5 }, { anno: 2014, reddito: 32.8 },
+        { anno: 2015, reddito: 33.0 }, { anno: 2016, reddito: 33.6 },
+        { anno: 2017, reddito: 34.1 }, { anno: 2018, reddito: 34.6 },
+        { anno: 2019, reddito: 35.0 }, { anno: 2020, reddito: 33.8 },
+        { anno: 2021, reddito: 34.5 }, { anno: 2022, reddito: 35.1 },
+        { anno: 2023, reddito: 35.5 },
+      ],
+    },
+    {
+      area: "Sud",
+      colore: "#27ae60",
+      valori: [
+        { anno: 2005, reddito: 24.1 }, { anno: 2006, reddito: 24.4 },
+        { anno: 2007, reddito: 24.9 }, { anno: 2008, reddito: 24.6 },
+        { anno: 2009, reddito: 24.0 }, { anno: 2010, reddito: 24.7 },
+        { anno: 2011, reddito: 24.5 }, { anno: 2012, reddito: 23.5 },
+        { anno: 2013, reddito: 23.0 }, { anno: 2014, reddito: 23.2 },
+        { anno: 2015, reddito: 23.5 }, { anno: 2016, reddito: 23.8 },
+        { anno: 2017, reddito: 24.1 }, { anno: 2018, reddito: 24.4 },
+        { anno: 2019, reddito: 24.7 }, { anno: 2020, reddito: 23.9 },
+        { anno: 2021, reddito: 24.3 }, { anno: 2022, reddito: 24.8 },
+        { anno: 2023, reddito: 25.2 },
+      ],
+    },
+  ];
+
+  // --- Setup dimensioni ---
+  const container = document.getElementById("chart-reddito");
+  const margin = { top: 20, right: 24, bottom: 40, left: 48 };
+
+  function getWidth() {
+    return container.clientWidth || 700;
+  }
+
+  function buildChart() {
+    container.innerHTML = "";
+
+    const totalWidth = getWidth();
+    const totalHeight = Math.max(280, Math.min(400, totalWidth * 0.5));
+    const width = totalWidth - margin.left - margin.right;
+    const height = totalHeight - margin.top - margin.bottom;
+
+    const svg = d3
+      .select(container)
+      .append("svg")
+      .attr("width", totalWidth)
+      .attr("height", totalHeight)
+      .attr("viewBox", `0 0 ${totalWidth} ${totalHeight}`)
+      .attr("aria-hidden", "true");
+
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Scale
+    const allAnni = serie[0].valori.map((d) => d.anno);
+    const allValori = serie.flatMap((s) => s.valori.map((d) => d.reddito));
+
+    const x = d3.scaleLinear().domain(d3.extent(allAnni)).range([0, width]);
+    const y = d3
+      .scaleLinear()
+      .domain([Math.floor(d3.min(allValori) - 2), Math.ceil(d3.max(allValori) + 2)])
+      .range([height, 0]);
+
+    // Gridlines orizzontali
+    g.append("g")
+      .attr("class", "grid")
+      .call(
+        d3
+          .axisLeft(y)
+          .tickSize(-width)
+          .tickFormat("")
+          .ticks(5)
+      )
+      .call((gg) => gg.select(".domain").remove())
+      .call((gg) =>
+        gg
+          .selectAll(".tick line")
+          .attr("stroke", "rgba(0,0,0,0.07)")
+          .attr("stroke-dasharray", "3,3")
+      );
+
+    // Assi
+    g.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(
+        d3
+          .axisBottom(x)
+          .tickValues(allAnni.filter((_, i) => i % 3 === 0))
+          .tickFormat(d3.format("d"))
+      )
+      .call((gg) => gg.select(".domain").attr("stroke", "rgba(0,0,0,0.2)"))
+      .call((gg) => gg.selectAll(".tick line").attr("stroke", "rgba(0,0,0,0.2)"))
+      .call((gg) =>
+        gg
+          .selectAll("text")
+          .attr("fill", "#5b5b5b")
+          .attr("font-size", "11px")
+          .attr("font-family", "var(--font-sans)")
+      );
+
+    g.append("g")
+      .call(d3.axisLeft(y).ticks(5).tickFormat((d) => `${d}k`))
+      .call((gg) => gg.select(".domain").remove())
+      .call((gg) => gg.selectAll(".tick line").remove())
+      .call((gg) =>
+        gg
+          .selectAll("text")
+          .attr("fill", "#5b5b5b")
+          .attr("font-size", "11px")
+          .attr("font-family", "var(--font-sans)")
+      );
+
+    // Line generator
+    const linea = d3
+      .line()
+      .x((d) => x(d.anno))
+      .y((d) => y(d.reddito))
+      .curve(d3.curveMonotoneX);
+
+    // Disegna linee
+    serie.forEach((s) => {
+      g.append("path")
+        .datum(s.valori)
+        .attr("fill", "none")
+        .attr("stroke", s.colore)
+        .attr("stroke-width", 2.5)
+        .attr("d", linea);
+
+      // Cerchi
+      g.selectAll(`.dot-${s.area}`)
+        .data(s.valori)
+        .join("circle")
+        .attr("class", `dot-${s.area}`)
+        .attr("cx", (d) => x(d.anno))
+        .attr("cy", (d) => y(d.reddito))
+        .attr("r", 4)
+        .attr("fill", s.colore)
+        .attr("stroke", "#fbfbf9")
+        .attr("stroke-width", 1.5)
+        .style("cursor", "pointer");
+    });
+
+    // --- Tooltip — inserito nel portale, non in fondo al body ---
+    const tooltipEl = document.getElementById("chart-tooltip-portal");
+    const tooltip = d3.select(tooltipEl).attr("role", "tooltip");
+
+    // Overlay invisibile per rilevare la posizione del cursore
+    const bisect = d3.bisector((d) => d.anno).center;
+
+    svg.on("mousemove", (event) => {
+      const [mx] = d3.pointer(event, g.node());
+      const anno = Math.round(x.invert(mx));
+      const idx = bisect(serie[0].valori, anno);
+      if (idx < 0 || idx >= serie[0].valori.length) return;
+
+      const righe = serie
+        .map((s) => {
+          const v = s.valori[idx];
+          return `<span style="color:${s.colore}">■</span> ${s.area}: <strong>${v.reddito}k €</strong>`;
+        })
+        .join("<br>");
+
+      tooltip
+        .html(`<div style="margin-bottom:4px;font-weight:600">${serie[0].valori[idx].anno}</div>${righe}`)
+        .classed("visible", true)
+        .style("left", `${event.clientX + 16}px`)
+        .style("top", `${event.clientY - 10}px`);
+
+      // Evidenzia i punti dell'anno corrente
+      serie.forEach((s) => {
+        g.selectAll(`.dot-${s.area}`)
+          .attr("r", (d) => (d.anno === serie[0].valori[idx].anno ? 6 : 4))
+          .attr("stroke-width", (d) => (d.anno === serie[0].valori[idx].anno ? 2 : 1.5));
+      });
+    });
+
+    svg.on("mouseleave", () => {
+      tooltip.classed("visible", false);
+      serie.forEach((s) => {
+        g.selectAll(`.dot-${s.area}`).attr("r", 4).attr("stroke-width", 1.5);
+      });
+    });
+
+    // Nessun cleanup del tooltip (il portale persiste)
+    return () => {};
+  }
+
+  // --- Legend ---
+  const legend = document.createElement("div");
+  legend.className = "chart-legend";
+  serie.forEach((s) => {
+    const item = document.createElement("div");
+    item.className = "chart-legend__item";
+    item.innerHTML = `<span class="chart-legend__swatch" style="background:${s.colore}"></span>${s.area}`;
+    legend.appendChild(item);
+  });
+  container.after(legend);
+
+  // --- Build & resize ---
+  let cleanup = buildChart();
+
+  const ro = new ResizeObserver(() => {
+    cleanup?.();
+    cleanup = buildChart();
+  });
+  ro.observe(container);
+</script>

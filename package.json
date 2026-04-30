@@ -1,0 +1,21 @@
+{
+  "name": "astro-baseline",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "astro": "^6.2.0",
+    "d3": "^7.9.0",
+    "scrollama": "^3.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

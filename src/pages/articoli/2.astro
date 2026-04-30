@@ -1,0 +1,168 @@
+---
+import Base from "../../layouts/Base.astro";
+import { site } from "../../content/site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  name: site.name,
+  url: site.url,
+  inLanguage: site.locale
+};
+---
+
+<Base
+  title={`${site.name} - Articolo 3`}
+  description={site.description}
+  canonicalPath="/articoli/3"
+  jsonLd={jsonLd}>
+
+  <!-- Intro prose -->
+  <article class="prose scrolly-prose">
+    <h1>Perché parlare di disuguaglianze?</h1>
+    <p>Come è nata la nostra idea? Scorri in basso per scoprirlo</p>
+  </article>
+
+  <!-- Scrollytelling -->
+  <section id="scrolly" aria-label="Racconto visivo interattivo">
+    <!-- Pannello grafico sticky -->
+    <div id="sticky-graphic" aria-hidden="true">
+      <svg id="chart-3"></svg>
+      <noscript>
+        <table>
+          <caption>Dati principali</caption>
+          <thead><tr><th>Step</th><th>Valore</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>—</td></tr>
+            <tr><td>1</td><td>—</td></tr>
+            <tr><td>2</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </noscript>
+    </div>
+
+    <!-- Steps overlay -->
+    <div id="steps" role="list">
+      <div class="step" data-step="0" role="listitem">
+        <div class="step-content">
+          <p>Secondo il filosofo francese Jean Jaques Rousseau, le disuguaglianze nascono dalla proprietà privata.</p>
+        </div>
+      </div>
+      <div class="step" data-step="-1" role="listitem" aria-hidden="true">
+        <div class="step-content">
+          <p>Prima del contratto fra gli uomini, <b>tutti erano uguali.</b></p>
+        </div>
+      </div>
+      <div class="step" data-step="1" role="listitem">
+        <div class="step-content">
+          <p>Poi, la società si è divisa: da un lato i <b>poveri</b>, dall'altro i <b class="ricchi_text">ricchi</b></p>
+        </div>
+      </div>
+      <div class="step" data-step="2" role="listitem">
+        <div class="step-content">
+          <p>Poi, i poveri sono diventati di più.</p>
+        </div>
+      </div>
+      <div class="step" data-step="3" role="listitem">
+        <div class="step-content">
+          <p>Infine, alcuni ricchi sono diventati <b style="color: var(--super-rich)">ricchissimi.</b></p>
+        </div>
+      </div>
+      <div id="steps-spacer" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- Outro prose -->
+  <article class="prose scrolly-prose">
+    <h2>Eat the rich</h2>
+  </article>
+
+</Base>
+
+<style>
+  /* Breakout dal page__main (max-width: 900px) */
+  #scrolly {
+    --super-rich: #7c3aed;
+    position: relative;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 100vw;
+  }
+
+  #sticky-graphic {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  #chart-3 {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #steps {
+    margin-top: -100vh;
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .step {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: clamp(1rem, 5vw, 4rem);
+  }
+
+  .step-content {
+    pointer-events: all;
+    max-width: 320px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: var(--space-4);
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+
+  .step-content p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--fg);
+  }
+
+  /* Step attivo evidenziato */
+  .step.is-active .step-content {
+    border-color: var(--link);
+  }
+
+  #steps-spacer {
+    height: 100vh;
+  }
+
+  /* Prose separata dal scrolly */
+  .scrolly-prose {
+    max-width: 65ch;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-5);
+  }
+
+  .ricchi_text { /* testo bianco con box nera */
+    color: #fff;
+    background: #000;
+    padding: 0.1em 0.2em;
+  }
+</style>
+
+<script>
+  import "../../scripts/scrollytelling_3.ts";
+</script>

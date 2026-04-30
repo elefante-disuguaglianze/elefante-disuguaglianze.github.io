@@ -1,0 +1,34 @@
+---
+import Base from "../../layouts/Base.astro";
+import { site } from "../../content/site";
+import LineChart from "../../components/charts/Chart_1.1.astro";
+import SoldiChart from "../../components/charts/Chart_1.3.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  url: site.url,
+  inLanguage: site.locale
+};
+---
+
+<Base
+  title={site.name}
+  description={site.description}
+  canonicalPath="/"
+  jsonLd={jsonLd}>
+<article class="prose">
+  <h1>Articolo 1</h1>
+  <p class="lead">Questo è il primo articolo del nostro sito.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+  <p>Il grafico qui sotto mostra l'andamento del reddito medio familiare in Italia dal 2005 al 2023 (dati di esempio). Passa il cursore sulle linee per vedere i valori.</p>
+
+  <LineChart />
+  <p> Qui sotto un altro fico grafico interattivo con dati inventati</p>
+  <SoldiChart />
+
+
+</article>
+</Base>

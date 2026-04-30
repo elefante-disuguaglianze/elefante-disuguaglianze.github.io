@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import type { Article } from "../content/articles";
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const href = `${base}/${article.href}`;
+---
+
+{article.published && (
+  <a href={href} class="article-card article-card--published">
+    <span class="article-card__number">Numero {article.number}</span>
+    <span class="article-card__date">{article.publishedAt?.toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric" })}</span>
+    <h3 class="article-card__title">{article.title}</h3>
+    {article.image ? (
+      <Image
+        src={article.image}
+        alt={article.imageAlt ?? ""}
+        class="article-card__img"
+        width={400}
+        height={180}
+      />
+    ) : (
+      <div class="article-card__visual" aria-hidden="true"></div>
+    )}
+    <p class="article-card__desc">{article.description}</p>
+  </a>
+)}

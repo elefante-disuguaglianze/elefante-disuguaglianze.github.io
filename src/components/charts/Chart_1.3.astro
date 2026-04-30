@@ -1,0 +1,367 @@
+---
+---
+
+<figure class="viz-figure" aria-label="Dove ti collochi nella distribuzione del reddito in Italia">
+  <figcaption>
+    <strong>Dove ti collochi nella distribuzione del reddito</strong> Reddito netto individuale mensile in Italia. Ogni pallina rappresenta l'1% della popolazione italiana.
+    <br><small> Dati completamente a caso.</small>
+  </figcaption>
+
+  <div class="bubble-input">
+    <label for="reddito-input">Il tuo reddito mensile netto (€)</label>
+    <div class="bubble-input__row">
+      <span class="bubble-input__prefix">€</span>
+      <input
+        id="reddito-input"
+        type="number"
+        min="0"
+        max="100000"
+        step="50"
+        placeholder="es. 1400"
+        aria-describedby="reddito-result"
+      />
+    </div>
+  </div>
+
+  <div id="chart-distribuzione" role="img" aria-label="Distribuzione del reddito: 100 cerchi, quelli neri rappresentano la quota di popolazione che guadagna come te o meno"></div>
+
+  <div class="bubble-result" id="reddito-result" aria-live="polite"></div>
+
+  <noscript>
+    <table>
+      <caption>Soglie di reddito netto mensile individuale in Italia (indicativo)</caption>
+      <thead>
+        <tr><th>Reddito mensile netto</th><th>Posizione nella distribuzione</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Meno di €500</td><td>Sei nel 10% più povero d'Italia</td></tr>
+        <tr><td>€500 – €999</td><td>Sei nel 30% più povero d'Italia</td></tr>
+        <tr><td>€1.000 – €1.999</td><td>Guadagni più della metà degli italiani</td></tr>
+        <tr><td>€2.000 – €3.999</td><td>Guadagni più del 70% degli italiani</td></tr>
+        <tr><td>€4.000 – €7.999</td><td>Guadagni più del 90% degli italiani</td></tr>
+        <tr><td>€8.000 o più</td><td>Sei tra i più abbienti d'Italia (top 10%)</td></tr>
+      </tbody>
+    </table>
+  </noscript>
+</figure>
+
+<style>
+  .viz-figure {
+    margin: var(--space-5) 0;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .viz-figure figcaption {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .viz-figure figcaption strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--fg);
+    margin-bottom: var(--space-1);
+  }
+
+  .bubble-input {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .bubble-input label {
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .bubble-input__row {
+    display: flex;
+    align-items: center;
+    max-width: 240px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .bubble-input__prefix {
+    padding: var(--space-2) var(--space-3);
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    border-right: 1px solid var(--border);
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .bubble-input input[type="number"] {
+    border: none;
+    outline: none;
+    padding: var(--space-2) var(--space-3);
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    color: var(--fg);
+    background: transparent;
+    width: 100%;
+    -moz-appearance: textfield;
+  }
+
+  .bubble-input input[type="number"]::-webkit-outer-spin-button,
+  .bubble-input input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .bubble-input__row:focus-within {
+    outline: 2px solid var(--link);
+    outline-offset: 0;
+  }
+
+  #chart-distribuzione {
+    width: 100%;
+    padding: var(--space-3) 0;
+  }
+
+  .bubble-result {
+    padding: 0 var(--space-4) var(--space-4);
+    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    color: var(--fg);
+    min-height: 1.5rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .bubble-result:empty {
+    display: none;
+  }
+
+  noscript table {
+    width: calc(100% - var(--space-4) * 2);
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    font-family: var(--font-sans);
+    margin: var(--space-4);
+  }
+
+  noscript th,
+  noscript td {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+
+  noscript th {
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  noscript td {
+    color: var(--muted);
+  }
+
+  :global(.bubble-label) {
+    font-size: 0.75rem;
+    font-family: var(--font-sans);
+    fill: var(--muted);
+  }
+</style>
+
+<script type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+  const N        = 100;
+  const HEIGHT   = 250;
+  const COLL_PAD = 5;
+
+  function calcR(width) {
+    return Math.min(7, Math.max(3, Math.floor(width / 100)));
+  }
+
+  const container = document.getElementById("chart-distribuzione");
+  const inputEl   = document.getElementById("reddito-input");
+  const resultEl  = document.getElementById("reddito-result");
+
+  function calcolaPercentile(reddito) {
+    if (reddito <= 0)    return null;
+    if (reddito <= 200) return { neri: 1,  testo: "Sei nel 1% più povero d'Italia." };
+    if (reddito <= 500)   return { neri: 10,  testo: "Sei nel 10% più povero d'Italia." };
+    if (reddito <= 1000)  return { neri: 30,  testo: "Sei nel 30% più povero d'Italia." };
+    if (reddito <= 2000)  return { neri: 50,  testo: "Guadagni più della metà degli italiani." };
+    if (reddito <= 4000)  return { neri: 70,  testo: "Guadagni più del 70% degli italiani." };
+    if (reddito <= 8000)  return { neri: 90,  testo: "Guadagni più del 90% degli italiani." };
+    if (reddito <= 10000) return { neri: 95, testo: "Sei tra i più abbienti d'Italia (top 5%)." };
+    return               { neri: 99, testo: "Sei tra i più abbienti d'Italia (top 1%)." };
+  }
+
+  let sim          = null;
+  let nodes        = null;
+  let svgSel       = null;
+  let currentNeri  = null;
+  let currentWidth = 0;
+  let currentR     = 16;
+
+  function groupX(group, width) {
+    if (group === "left")  return width * 0.25;
+    if (group === "right") return width * 0.75;
+    return width * 0.5;
+  }
+
+  function assignGroups(neri) {
+    nodes.forEach((n, i) => {
+      n.group = neri === null ? "center" : (i < neri ? "left" : "right");
+    });
+  }
+
+  function buildSVG(width) {
+    container.innerHTML = "";
+    const r = currentR;
+
+    svgSel = d3.select(container)
+      .append("svg")
+      .attr("width",  width)
+      .attr("height", HEIGHT)
+      .attr("aria-hidden", "true");
+
+    svgSel.append("text")
+      .attr("class",        "bubble-label bubble-label--left")
+      .attr("x",            width * 0.25)
+      .attr("y",            14)
+      .attr("text-anchor",  "middle")
+      .attr("opacity",      0)
+      .text("Meno ricchi di te");
+
+    svgSel.append("text")
+      .attr("class",        "bubble-label bubble-label--right")
+      .attr("x",            width * 0.75)
+      .attr("y",            14)
+      .attr("text-anchor",  "middle")
+      .attr("opacity",      0)
+      .text("Più ricchi di te");
+
+    svgSel.selectAll("circle")
+      .data(nodes)
+      .join("circle")
+      .attr("cx",           (d) => d.x)
+      .attr("cy",           (d) => d.y)
+      .attr("r",            r)
+      .attr("fill",         (d) => d.group === "left" ? "var(--fg)" : "transparent")
+      .attr("stroke",       "var(--fg)")
+      .attr("stroke-width", 1.5);
+  }
+
+  function updateLabels(neri) {
+    if (!svgSel) return;
+    svgSel.select(".bubble-label--left")
+      .transition().duration(400)
+      .attr("opacity", neri !== null && neri > 0 ? 1 : 0);
+    svgSel.select(".bubble-label--right")
+      .transition().duration(400)
+      .attr("opacity", neri !== null && neri < N ? 1 : 0);
+  }
+
+  function renderNodes(width) {
+    const r = currentR;
+    const margin = r;
+    nodes.forEach((n) => {
+      n.x = Math.max(margin, Math.min(width - margin, n.x));
+      n.y = Math.max(r + 34, Math.min(HEIGHT - margin, n.y));
+    });
+
+    svgSel.selectAll("circle")
+      .attr("cx", (d) => d.x)
+      .attr("cy", (d) => d.y)
+      .attr("fill", (d) => d.group === "left" ? "var(--fg)" : "transparent");
+  }
+
+  function runSim(width, warmupTicks = 0) {
+    if (sim) sim.stop();
+    const r = currentR;
+
+    sim = d3.forceSimulation(nodes)
+      .force("x",       d3.forceX((d) => groupX(d.group, width)).strength(0.07))
+      .force("y",       d3.forceY(HEIGHT / 2).strength(0.05))
+      .force("collide", d3.forceCollide(r + COLL_PAD).strength(0.9))
+      .alphaDecay(0.012)
+      .stop();
+
+    // Esegue qualche tick prima del primo paint per evitare sovrapposizioni iniziali visibili.
+    if (warmupTicks > 0) {
+      for (let i = 0; i < warmupTicks; i += 1) {
+        sim.tick();
+      }
+      renderNodes(width);
+    }
+
+    sim
+      .on("tick", () => {
+        renderNodes(width);
+      });
+
+    sim.alpha(0.35).restart();
+  }
+
+  // Inizializzazione
+  (function init() {
+    currentWidth = container.clientWidth || 600;
+    currentR     = calcR(currentWidth);
+    nodes = d3.range(N).map(() => ({
+      group: "center",
+      x:  currentWidth / 2 + (Math.random() - 0.5) * 100,
+      y:  HEIGHT / 2       + (Math.random() - 0.5) * 100,
+      vx: 0,
+      vy: 0,
+    }));
+    buildSVG(currentWidth);
+    runSim(currentWidth, 90);
+  })();
+
+  // Handler input
+  inputEl.addEventListener("input", () => {
+    const val  = parseFloat(inputEl.value);
+    const calc = (!inputEl.value || isNaN(val) || val <= 0) ? null : calcolaPercentile(val);
+    const neri = calc ? calc.neri : null;
+
+    resultEl.textContent = calc ? calc.testo : "";
+
+    if (neri === currentNeri) return;
+    currentNeri = neri;
+
+    assignGroups(neri);
+    updateLabels(neri);
+
+    if (sim) {
+      sim.force("x", d3.forceX((d) => groupX(d.group, currentWidth)).strength(0.07));
+      sim.alpha(0.6).restart();
+    }
+  });
+
+  // Responsive resize
+  let lastWidth = container.clientWidth;
+  const ro = new ResizeObserver(() => {
+    const w = container.clientWidth;
+    if (Math.abs(w - lastWidth) < 5) return;
+    lastWidth = w;
+    const scale = w / currentWidth;
+    nodes.forEach((n) => { n.x = n.x * scale; n.vx = 0; n.vy = 0; });
+    currentWidth = w;
+    currentR     = calcR(w);
+    buildSVG(w);
+    updateLabels(currentNeri);
+    runSim(w);
+  });
+  ro.observe(container);
+</script>

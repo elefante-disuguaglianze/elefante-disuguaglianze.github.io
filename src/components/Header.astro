@@ -1,0 +1,35 @@
+---
+import { site, type SiteNavItem } from "../content/site";
+
+const { brand = site.name, nav = site.nav } = Astro.props as {
+  brand?: string;
+  nav?: SiteNavItem[];
+};
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const withBase = (href: string) => `${base}${href}`;
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => {
+  const full = withBase(href);
+  return href === "/" ? path === full : path.startsWith(full);
+};
+---
+
+<header class="header">
+  <div class="header__inner">
+    <a class="header__brand" href={withBase("/")}>{brand}</a>
+
+    <nav class="header__nav" aria-label="Primary">
+      <ul class="nav">
+        {nav.map((item) => (
+          <li class="nav__item">
+            <a class={`nav__link ${isActive(item.href) ? "is-active" : ""}`} href={withBase(item.href)}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
