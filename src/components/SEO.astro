@@ -59,9 +59,8 @@ const computedOgType: "website" | "article" = ogType ?? (canonical.includes("/bl
 <meta name="twitter:description" content={ogDesc} />
 {hasOg && <meta name="twitter:image" content={ogImage} />}
 
-<link rel="icon" href={`${import.meta.env.BASE_URL}icon.svg`} type="image/svg+xml" />
-<link rel="alternate icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
-<link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}apple-touch-icon.png`} />
+<link rel="icon" href={`${import.meta.env.BASE_URL}eyes_icon.svg`} type="image/svg+xml" />
+<link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}eyes_icon.png`} />
 
 {jsonLdArray.map((obj) => (
   <script type="application/ld+json" set:html={JSON.stringify(obj)} />
