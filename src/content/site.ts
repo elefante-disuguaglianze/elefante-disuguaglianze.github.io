@@ -44,7 +44,7 @@ export const site: SiteConfig = {
   },
   nav: [
     { label: "Home", href: "/" },
-    { label: "Chi siamo noi?", href: "/about" },
+    { label: "Chi siamo?", href: "/about" },
     { label: "Contatti", href: "/contact" },
   ],
   seo: {
