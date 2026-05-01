@@ -20,16 +20,70 @@ const isActive = (href: string) => {
   <div class="header__inner">
     <a class="header__brand" href={withBase("/")}>{brand}</a>
 
-    <nav class="header__nav" aria-label="Primary">
-      <ul class="nav">
-        {nav.map((item) => (
-          <li class="nav__item">
-            <a class={`nav__link ${isActive(item.href) ? "is-active" : ""}`} href={withBase(item.href)}>
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <button class="header__toggle" aria-controls="globalNav" aria-expanded="false" data-behavior="ToggleNavigation">
+      <svg class="icon icon--menu" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      <svg class="icon icon--close" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+      <span class="visually-hidden">Menu</span>
+    </button>
   </div>
 </header>
+
+<nav class="header__nav" id="globalNav" aria-label="Primary" aria-hidden="true">
+  <ul class="nav">
+    {nav.map((item) => (
+      <li class="nav__item">
+        <a class={`nav__link ${isActive(item.href) ? "is-active" : ""}`} href={withBase(item.href)}>
+          {item.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  const toggle = document.querySelector('[data-behavior="ToggleNavigation"]') as HTMLButtonElement | null;
+  const nav = document.getElementById('globalNav');
+  const html = document.documentElement;
+
+  function setHeaderHeight() {
+    const header = document.querySelector('.header') as HTMLElement | null;
+    if (header) html.style.setProperty('--header-h', `${header.offsetHeight}px`);
+  }
+  setHeaderHeight();
+  window.addEventListener('resize', setHeaderHeight, { passive: true });
+
+  function openMenu() {
+    html.classList.add('s-menu-open');
+    toggle?.setAttribute('aria-expanded', 'true');
+    nav?.setAttribute('aria-hidden', 'false');
+    (nav?.querySelector('.nav__link') as HTMLElement | null)?.focus();
+  }
+
+  function closeMenu() {
+    html.classList.remove('s-menu-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+    nav?.setAttribute('aria-hidden', 'true');
+    toggle?.focus();
+  }
+
+  toggle?.addEventListener('click', () => {
+    html.classList.contains('s-menu-open') ? closeMenu() : openMenu();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && html.classList.contains('s-menu-open')) closeMenu();
+  });
+
+  nav?.querySelectorAll('.nav__link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (html.classList.contains('s-menu-open')) closeMenu();
+    });
+  });
+</script>
