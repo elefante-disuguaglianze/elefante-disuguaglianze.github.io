@@ -53,6 +53,14 @@ main {
   font-size: clamp(2.125rem, 2rem + 0.4vw, 2.35rem);
   font-weight: 900;
   letter-spacing: -0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.header__logo{
+  width: 3rem;
+  height: auto;
+  flex-shrink: 0;
 }
 
 .nav{

@@ -28,7 +28,7 @@ export type SiteConfig = {
 };
 
 export const site: SiteConfig = {
-  name: "ELEFANTE",
+  name: "L'ELEFANTE",
   tagline: "Un sito di prova, usando il framework Astro (non so che sto facendo)",
   description:
     "Inchieste e approfondimenti sulle disuguaglianze in Italia.",
@@ -36,9 +36,8 @@ export const site: SiteConfig = {
   url: import.meta.env.SITE_URL ?? "https://elefante-disuguaglianze.github.io",
   locale: "it",
   author: {
-    name: "Elefanti",
-    email: "hello@example.com",
-    url: "https://example.com",
+    name: "L'ELEFANTE",
+    email: "elefante.disuguaglianze --[at]-- gmail.com",
     socials: {
       instagram: "https://instagram.com/elefanti"
     }

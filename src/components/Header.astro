@@ -18,7 +18,10 @@ const isActive = (href: string) => {
 
 <header class="header">
   <div class="header__inner">
-    <a class="header__brand" href={withBase("/")}>{brand}</a>
+    <a class="header__brand" href={withBase("/")}>
+      <img class="header__logo" src={withBase("/images/og/elefant.svg")} alt="" width="32" height="29" aria-hidden="true" />
+      {brand}
+    </a>
 
     <button class="header__toggle" aria-controls="globalNav" aria-expanded="false" data-behavior="ToggleNavigation">
       <svg class="icon icon--menu" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
