@@ -37,7 +37,7 @@ function targetY(d: SimNode): number {
   if (d.group === "super")  return height * 0.10;
   if (d.group === "top")    return currentStep >= 3 ? height * 0.50 : height * 0.27;
   if (d.group === "bottom") return currentStep >= 3 ? height * 0.80 : height * 0.73;
-  return height / 2;
+  return height * 0.35;
 }
 
 function fillOf(d: SimNode): string {
