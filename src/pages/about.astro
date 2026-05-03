@@ -2,16 +2,18 @@
 import Base from "../layouts/Base.astro";
 import { site } from "../content/site";
 
-const title = `About — ${site.name}`;
+const title = `Chi siamo — ${site.name}`;
 ---
 
 <Base
   title={title}
-  description={`About ${site.name}`}
-  canonicalPath="/about",
-  mainCentered={true}
+  description={`Chi siamo — ${site.name}`}
+  canonicalPath="/about"
 >
   <article class="prose">
-    <h1>Dell3 grandi!</h1>
+    <h1>Cos'è l'elefante</h1>
+    <p>L'elefante è un progetto editoriale di approfondimento sulle disuguaglianze sociali ed economiche in Italia. Il nostro obiettivo è raccontare tramite dati e storie il modo in cui le disuguaglianze hanno un impatto sulla vita quotidiana delle persone.</p>
+    <h1>Le persone</h1>
+    <p>Siamo un gruppo di ragazze e ragazzi con esperienze variegate in ambiti giornalistici, sociali e accademici. Al momento siamo in sei, ma non escludiamo che in futuro altre persone possano unirsi a noi.</p>
   </article>
 </Base>

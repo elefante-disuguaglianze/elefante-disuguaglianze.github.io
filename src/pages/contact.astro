@@ -2,24 +2,24 @@
 import Base from "../layouts/Base.astro";
 import { site } from "../content/site";
 
-const title = `Contact — ${site.name}`;
+const title = `Contatti — ${site.name}`;
 ---
 
 <Base
   title={title}
-  description={`Contact ${site.name}`}
+  description={`Contatta ${site.name}`}
   canonicalPath="/contact"
   mainCentered
 >
   <article class="prose">
-    <h1>Contact</h1>
+    <h1>Contatti</h1>
 
     <p class="lead">
-      This site does not include a contact form by default.
+      Per domande, segnalazioni o collaborazioni, scrivici via email.
     </p>
 
     <p>
-      If you need to get in touch, you can reach us by email:
+      Puoi raggiungerci a:
     </p>
 
     {site.author.email && (
@@ -31,7 +31,7 @@ const title = `Contact — ${site.name}`;
     )}
 
     <p>
-      This keeps the baseline simple and avoids unnecessary JavaScript.
+      Leggiamo tutto, ma i tempi di risposta possono variare.
     </p>
   </article>
 </Base>
