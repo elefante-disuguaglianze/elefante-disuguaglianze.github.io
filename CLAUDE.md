@@ -96,3 +96,6 @@ Rimuovere placeholder, sistemare token Cloudflare o analytics, allineare OG/cano
 npm run check
 npm run build
 ```
+
+## Typescript
+Ignore typescript error about "any" types inferred : it doesn't stop code execution.
