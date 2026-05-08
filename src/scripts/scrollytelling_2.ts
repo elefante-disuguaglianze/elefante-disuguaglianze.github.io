@@ -22,6 +22,7 @@ const MONEY_STR_Y = 0.04;
 
 // ─── Setup SVG ────────────────────────────────────────────────────────────
 const container = document.getElementById("sticky-graphic")!;
+const euroSrc = (container as HTMLElement).dataset.euroSrc ?? "";
 const svg = d3.select<SVGSVGElement, unknown>("#chart-3");
 
 let width  = container.clientWidth; 
@@ -84,17 +85,18 @@ const circles = g
   .attr("stroke-width", 1.5);
 
 
+const ICON_SIZE = R * 2.5;
+
 const moneyCircles = g
-  .selectAll<SVGTextElement, SimNode>("text.money-icon")
+  .selectAll<SVGImageElement, SimNode>("image.money-icon")
   .data(moneyNodes)
-  .join("text")
-  .attr("class",            "money-icon")
-  .attr("font-size",        R * 3)
-  .attr("text-anchor",      "middle")
-  .attr("dominant-baseline","middle")
-  .attr("role",             "img")
-  .attr("aria-label",       "denaro")
-  .text("💰");
+  .join("image")
+  .attr("class",      "money-icon")
+  .attr("href",       euroSrc)
+  .attr("width",      ICON_SIZE)
+  .attr("height",     ICON_SIZE)
+  .attr("role",       "img")
+  .attr("aria-label", "denaro");
 
 // ─── Simulation ───────────────────────────────────────────────────────────
 function makeForces() {
@@ -133,8 +135,8 @@ const moneySim = d3.forceSimulation<SimNode>(moneyNodes)
   .alphaDecay(0.012)
   .on("tick", () => {
     moneyCircles
-      .attr("x", (d) => d.x!)
-      .attr("y", (d) => d.y!);
+      .attr("x", (d) => d.x! - ICON_SIZE / 2)
+      .attr("y", (d) => d.y! - ICON_SIZE / 2);
   })
   .stop();
 
@@ -144,7 +146,7 @@ circles.attr("cx", (d) => d.x!).attr("cy", (d) => d.y!);
 sim.alpha(0.3).restart();
 
 for (let i = 0; i < 80; i++) moneySim.tick();
-moneyCircles.attr("x", (d) => d.x!).attr("y", (d) => d.y!);
+moneyCircles.attr("x", (d) => d.x! - ICON_SIZE / 2).attr("y", (d) => d.y! - ICON_SIZE / 2);
 moneySim.alpha(0.3).restart();
 
 // ─── States ───────────────────────────────────────────────────────────────

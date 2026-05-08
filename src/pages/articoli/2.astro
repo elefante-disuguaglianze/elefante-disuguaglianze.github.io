@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { site } from "../../content/site";
+import euroSymbol from "../../assets/articles/euro-coin.png";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -26,7 +27,7 @@ const jsonLd = {
   <!-- Scrollytelling -->
   <section id="scrolly" aria-label="Racconto visivo interattivo">
     <!-- Pannello grafico sticky -->
-    <div id="sticky-graphic" aria-hidden="true">
+    <div id="sticky-graphic" data-euro-src={euroSymbol.src} aria-hidden="true">
       <svg id="chart-3"></svg>
       <noscript>
         <table>
