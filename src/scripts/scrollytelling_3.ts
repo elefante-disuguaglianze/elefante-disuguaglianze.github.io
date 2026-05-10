@@ -66,6 +66,7 @@ const circles = circleGroup
 
 let extraNodes: SimNode[] = [];
 let extraCircles: d3.Selection<SVGCircleElement, SimNode, SVGGElement, unknown> | null = null;
+let phase2Timer: ReturnType<typeof setTimeout> | null = null;
 
 const simulation = d3
   .forceSimulation<SimNode>(nodes)
@@ -113,27 +114,31 @@ function spawnExtras() {
     .interrupt()
     .remove();
 
+  // Fase 1: i nodi extra appaiono al centro dell'SVG
   extraNodes = Array.from({ length: N_EXTRA }, () => ({
     x: width * 0.7 + (Math.random() - 0.5) * 30,
-    y: y_step1_left + (Math.random() - 0.5) * 30,
+    y: height / 2 + (Math.random() - 0.5) * 30,
     group: "top",
   }));
 
-  // Fase di pre-assestamento invisibile: eseguiamo la simulazione sui soli
-  // nodi extra (senza renderizzare) in modo che quando appaiono siano già
-  // distribuiti nello spazio e non partano da un grumo esplosivo.
+  // Pre-assestamento invisibile al centro per evitare grumo esplosivo.
   const shadowSim = d3
     .forceSimulation<SimNode>(extraNodes)
     .force("x", d3.forceX<SimNode>(width * 0.7).strength(STR_X))
-    .force("y", d3.forceY<SimNode>(y_step1_left).strength(STR_Y))
+    .force("y", d3.forceY<SimNode>(height / 2).strength(STR_Y))
     .force("collide", d3.forceCollide<SimNode>(R + 1))
     .stop();
 
   shadowSim.alpha(0.9);
   for (let i = 0; i < 100; i++) shadowSim.tick();
-  // Azzero le velocità residue: i nodi appariranno fermi, poi la simulazione
-  // principale gestirà le collisioni con i nodi base.
-  extraNodes.forEach(n => { (n as d3.SimulationNodeDatum).vx = 0; (n as d3.SimulationNodeDatum).vy = 0; });
+  // Azzero velocità e fisso i nodi al centro (fx/fy): la simulazione principale
+  // non li sposta durante il fade-in. Fase 2 rilascerà i vincoli.
+  extraNodes.forEach(n => {
+    const nd = n as d3.SimulationNodeDatum;
+    nd.vx = 0; nd.vy = 0;
+    nd.fx = nd.x!;
+    nd.fy = nd.y!;
+  });
 
   // Aggancio gli extra alla simulazione: i nodi base mantengono x/y/vx/vy
   // perché l'identità degli oggetti SimNode è preservata.
@@ -153,12 +158,29 @@ function spawnExtras() {
   entered.transition().duration(TRANSITION_MS).ease(easing).style("opacity", 1);
   extraCircles = entered;
 
-  // Alpha più basso: i nodi extra sono già pre-assestati, serve solo risolvere
-  // le collisioni residue con i nodi base.
-  simulation.alpha(0.3).restart();
+  // I nodi extra sono fissi al centro via fx/fy: alpha 0.5 permette ai nodi
+  // base di muoversi normalmente mentre gli extra aspettano il fade-in.
+  simulation.alpha(0.5).restart();
+
+  // Fase 2: al termine del fade-in rilascio fx/fy → forceY porta gli extra
+  // verso y_step1_left (gruppo top), unendoli agli altri cerchi top.
+  phase2Timer = setTimeout(() => {
+    phase2Timer = null;
+    if (extraNodes.length === 0) return;
+    extraNodes.forEach(n => {
+      const nd = n as d3.SimulationNodeDatum;
+      nd.fx = null;
+      nd.fy = null;
+    });
+    simulation.alpha(0.5).restart();
+  }, TRANSITION_MS);
 }
 
 function removeExtras() {
+  if (phase2Timer !== null) {
+    clearTimeout(phase2Timer);
+    phase2Timer = null;
+  }
   if (extraNodes.length === 0 && !extraCircles) return;
 
   // Stacco subito gli extra dalla simulazione: smettono di influenzare
