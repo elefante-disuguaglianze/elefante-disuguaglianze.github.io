@@ -26,8 +26,8 @@ const g = svg.append("g").attr("class", "root");
 
 // ─── Man icons ────────────────────────────────────────────────────────────
 const manSrc = (container as HTMLElement).dataset.manSrc ?? "";
-const iconSize = Math.min(width, height) * 0.18;
-const gap = iconSize * 0.25;
+let iconSize = Math.min(width, height) * 0.18;
+let gap = iconSize * 0.25;
 
 const manLeft = g.append("image")
   .attr("href", manSrc)
@@ -265,7 +265,10 @@ const states: Record<number, (args: StateArgs) => void> = {
   },
 };
 
+let currentStep = 0;
+
 function applyStep(step: number, direction: "up" | "down") {
+  currentStep = step;
   states[step]?.({ direction });
 }
 
@@ -292,16 +295,30 @@ window.addEventListener("resize", () => {
   y_step1_right = height * 0.75;
   svg.attr("viewBox", `0 0 ${width} ${height}`);
 
-  const newSize = Math.min(width, height) * 0.18;
-  const newGap  = newSize * 0.25;
+  iconSize = Math.min(width, height) * 0.18;
+  gap = iconSize * 0.25;
 
-  manLeft.attr("width", newSize).attr("height", newSize)
-    .attr("x", width / 2 - newGap / 2 - newSize)
-    .attr("y", height / 2 - newSize / 2);
+  manLeft.attr("width", iconSize).attr("height", iconSize);
+  manRight.attr("width", iconSize).attr("height", iconSize);
 
-  manRight.attr("width", newSize).attr("height", newSize)
-    .attr("x", width / 2 + newGap / 2)
-    .attr("y", height / 2 - newSize / 2);
+  // Riposiziona le icone in base allo step corrente invece di resettarle
+  // sempre al centro: su mobile il browser triggera resize quando mostra/nasconde
+  // la barra degli indirizzi durante lo scroll, causando un flash visivo.
+  if (currentStep === 0) {
+    manLeft
+      .attr("x", width / 2 - gap / 2 - iconSize)
+      .attr("y", height / 2 - iconSize / 2);
+    manRight
+      .attr("x", width / 2 + gap / 2)
+      .attr("y", height / 2 - iconSize / 2);
+  } else {
+    manLeft
+      .attr("x", width * 0.3 - iconSize / 2)
+      .attr("y", y_step1_left - iconSize / 2);
+    manRight
+      .attr("x", width * 0.3 - iconSize / 2)
+      .attr("y", y_step1_right - iconSize / 2);
+  }
 
   scroller.resize();
 });
