@@ -35,11 +35,12 @@ export const articles: Article[] = [
 
   },
   {
-    number: 4,
-    title: "In lavorazione...",
+    number: 3,
+    title: "STORYBOARD",
     description:
-      "Nuovi dati e indagini sulle disuguaglianze strutturali in Italia sono in fase di elaborazione. Resta sintonizzato.",
-    href: "#",
-    published: false,
+      "STORYBOARD redditi.",
+    href: "articoli/3",
+    published: true,
+    publishedAt: new Date("2026-05-10"),
   },
 ];
