@@ -210,7 +210,7 @@ function releaseExtras() {
   // simulation.nodes() or simulation.force() changes — not on restart().
   // Mutating n.group above is not enough: re-setting the force triggers
   // initialize() so yz[i] is recomputed with the updated group assignments.
-  simulation.force("y", d3.forceY<SimNode>((d: SimNode) => d.group === "top" ? y_step1_left : y_step1_right).strength(STR_Y - 0.02)); // Slightly reduce strength 
+  simulation.force("y", d3.forceY<SimNode>((d: SimNode) => d.group === "top" ? y_step1_left : y_step1_right).strength(STR_Y - 0.03)); // Slightly reduce strength 
 
   simulation.alpha(0.5).restart();
   extrasPhase = 2;
