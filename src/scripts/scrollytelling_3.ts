@@ -31,8 +31,9 @@ const g = svg.append("g").attr("class", "root");
 const manSrcLeft = (container as HTMLElement).dataset.manSrcLeft ?? "";
 const manSrcRight = (container as HTMLElement).dataset.manSrcRight ?? "";
 
-let iconSize = Math.min(width, height) * 0.18;
-let gap = iconSize * 0.25;
+let iconSize_calc = () => width > 500 ? Math.min(width, height) * 0.18 : Math.min(width, height) * 0.28;
+let iconSize = iconSize_calc();
+let gap = iconSize * 0.30;
 
 const manLeft = g.append("image")
   .attr("href", manSrcLeft)
