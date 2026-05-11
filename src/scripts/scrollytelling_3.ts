@@ -33,7 +33,7 @@ const manSrcRight = (container as HTMLElement).dataset.manSrcRight ?? "";
 
 let iconSize_calc = () => width > 500 ? Math.min(width, height) * 0.18 : Math.min(width, height) * 0.28;
 let iconSize = iconSize_calc();
-let gap = iconSize * 0.30;
+let gap = iconSize * 0.40;
 
 const manLeft = g.append("image")
   .attr("href", manSrcLeft)
