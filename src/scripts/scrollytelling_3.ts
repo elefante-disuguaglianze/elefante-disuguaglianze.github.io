@@ -336,7 +336,7 @@ function applyStep(step: number, direction: "up" | "down") {
 const scroller = scrollama();
 
 scroller
-  .setup({ step: "#steps .step", offset: 0.5 })
+  .setup({ step: "#steps .step", offset: 0.2 })
   .onStepEnter(({ element, direction }) => {
     const step = +(element as HTMLElement).dataset.step!;
 

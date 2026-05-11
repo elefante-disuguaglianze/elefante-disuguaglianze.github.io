@@ -1,9 +1,12 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { site } from "../../content/site";
+import { articles } from "../../content/articles";
 
 import manIconRed from "../../assets/articles/man_red.png";
 import manIconBlue from "../../assets/articles/man_blue.png";
+
+const article = articles.find(a => a.number === 3)!;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -15,15 +18,15 @@ const jsonLd = {
 ---
 
 <Base
-  title={`${site.name} - Articolo 3`}
-  description={site.description}
+  title={`${site.name} - ${article.title}`}
+  description={article.description}
   canonicalPath="/articoli/3"
   jsonLd={jsonLd}>
 
   <!-- Intro prose -->
   <article class="prose scrolly-prose">
-    <h1>Perché parlare di disuguaglianze?</h1>
-    <p>Come è nata la nostra idea? Scorri in basso per scoprirlo</p>
+    <h1>L'amara storia dei redditi italiani</h1>
+    <p>Quanto guadagnamo? Siamo messi meglio o peggio dei nostri genitori? Scorri in basso per scoprirlo.</p>
   </article>
 
   <!-- Scrollytelling -->
