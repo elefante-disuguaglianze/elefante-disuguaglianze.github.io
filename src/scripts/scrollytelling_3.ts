@@ -364,7 +364,7 @@ window.addEventListener("resize", () => {
   y_step1_right = height * 0.75;
   svg.attr("viewBox", `0 0 ${width} ${height}`);
 
-  iconSize = Math.min(width, height) * 0.18;
+  iconSize = iconSize_calc();
   gap = iconSize * 0.25;
 
   manLeft.attr("width", iconSize).attr("height", iconSize);
