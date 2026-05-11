@@ -1,8 +1,9 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { site } from "../../content/site";
-import euroSymbol from "../../assets/articles/euro-coin.png";
-import manIcon from "../../assets/articles/man.png";
+
+import manIconRed from "../../assets/articles/man_red.png";
+import manIconBlue from "../../assets/articles/man_blue.png";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -28,7 +29,7 @@ const jsonLd = {
   <!-- Scrollytelling -->
   <section id="scrolly" aria-label="Racconto visivo interattivo">
     <!-- Pannello grafico sticky -->
-    <div id="sticky-graphic" data-euro-src={euroSymbol.src} data-man-src={manIcon.src} aria-hidden="true">
+    <div id="sticky-graphic" data-man-src-left={manIconRed.src} data-man-src-right={manIconBlue.src} aria-hidden="true">
       <svg id="chart-3"></svg>
       <noscript>
         <table>
@@ -47,27 +48,42 @@ const jsonLd = {
     <div id="steps" role="list">
       <div class="step" data-step="0" role="listitem">
         <div class="step-content">
-          <p>STEP 0</p>
+          <p>Andrea e Alex sono due amic3.</p>
         </div>
       </div>
       <div class="step" data-step="-1" role="listitem" aria-hidden="true">
         <div class="step-content">
-          <p>NO STEP</p>
+          <p>Appartengono a classi sociali diverse: Andrea è ricco, fa parte dell'1% più ricco d'Italia. Alex invece è una via di mezzo: non ricco ma neanche povero. È proprio a metà.</p>
         </div>
       </div>
       <div class="step" data-step="1" role="listitem">
         <div class="step-content">
-          <p>STEP 1</p>
+          <p>Nel 1980, in un anno hanno guadagnato in totale circa 190mila euro.</p>
         </div>
       </div>
       <div class="step" data-step="2" role="listitem">
         <div class="step-content">
-          <p>STEP 2</p>
+          <p>Andrea ha uno stipendio molto più alto: ha guadagnato quasi 160mila euro. <br><br> Ad Alex invece toccano circa 30mila.</p>
         </div>
       </div>
       <div class="step" data-step="3" role="listitem">
         <div class="step-content">
-          <p>STEP 3</p>
+          <p>Nel 2024, dopo 45 anni di lavoro, entrambi hanno visto crescere il proprio stipendio. In un anno ora guadagnano quasi 200mila euro in più!</p>
+        </div>
+      </div>
+      <div class="step" data-step="-1" role="listitem">
+        <div class="step-content">
+          <p>Solo che quasi tutti questi soldi in più sono andati ad Andrea.</p>
+        </div>
+      </div>
+      <div class="step" data-step="4" role="listitem">
+        <div class="step-content">
+          <p><b>Ad Alex ne sono andati pochissimi.</b></p>
+        </div>
+      </div>
+      <div class="step" data-step="-1" role="listitem">
+        <div class="step-content">
+          <p>Questo è quello che è successo alla società italiana negli ultimi 45 anni: i ricchi sono diventati sempre più ricchi, mentre gli altri sono rimasti indietro.</p>
         </div>
       </div>
       <div id="steps-spacer" aria-hidden="true"></div>
@@ -76,7 +92,8 @@ const jsonLd = {
 
   <!-- Outro prose -->
   <article class="prose scrolly-prose">
-    <h2>Eat the rich</h2>
+    <h2>Qui prosegue l'articolo normale</h2>
+    <p>Il racconto visivo è finito, ma l'articolo continua. Scorri in basso per leggere tutto.</p>
   </article>
 
 </Base>
@@ -165,6 +182,11 @@ const jsonLd = {
     padding: 0.1em 0.2em;
   }
 
+  @media (max-width: 600px) {
+    .step[data-step="0"] {
+      padding-bottom: 20vh;
+    }
+  }
 
 </style>
 
