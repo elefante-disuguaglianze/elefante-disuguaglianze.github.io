@@ -23,7 +23,7 @@ const svg = d3.select<SVGSVGElement, unknown>("#chart-3");
 let width  = container.clientWidth;
 let height = container.clientHeight;
 
-svg.attr("viewBox", `0 0 ${width} ${height}`);
+svg.attr("viewBox", `0 0 ${width} ${height}`); 
 
 const g = svg.append("g").attr("class", "root");
 
@@ -51,10 +51,18 @@ const manRight = g.append("image")
 // ─── Year label ───────────────────────────────────────────────────────────
 const yearLabelFontSize = () => Math.min(width, height) * 0.1;
 
+function yearYposition() {
+  if (width > 500) {
+    return height / 2 + yearLabelFontSize() / 2;
+  } else {
+    return yearLabelFontSize() + 30; // 20px margin from bottom on mobile
+  }
+}
+
 const yearLabel = g.append("text")
   .attr("class", "year-label")
   .attr("x", width - 24)
-  .attr("y", yearLabelFontSize() + 20)
+  .attr("y", yearYposition())
   .attr("text-anchor", "end")
   .attr("font-size", yearLabelFontSize())
   .attr("font-weight", "bold")
