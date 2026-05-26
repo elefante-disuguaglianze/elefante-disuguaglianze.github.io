@@ -27,11 +27,10 @@ const jsonLd = {
   <!-- Intro prose -->
   <article class="prose scrolly-prose">
     <h1>L'amara storia dei redditi italiani</h1>
-    <p>Quanto guadagnamo? Siamo messi meglio o peggio dei nostri genitori? Scorri in basso per scoprirlo.</p>
-    <p>In più di quarant'anni, la società italiana è avanzata moltissimo.</p>
-    <p>La tua famiglia, con ogni probabilità, è rimasta indietro.</p>
-    <p>Dipende soprattutto da quanti soldi hai.</p>
-    <p>Per capire cosa è successo, leggi la storia qua sotto.</p>
+    <p>Sono gli anni ‘80 in Italia: alla radio si sente per la prima volta “Maledetta Primavera” di Loretta Goggi, l’Italia vince i mondiali di calcio per la terza volta nella sua storia sportiva e le pagine dei giornali si riempiono di notizie sullo scandalo della loggia massonica P2.</p>
+    <p>Da allora, la società italiana è avanzata moltissimo.</p>
+    <p>La tua famiglia, con ogni probabilità, è rimasta indietro. Dipende principalmente da quanti soldi avevano i tuoi.</p>
+    <p>Per capire cosa è successo, seguiamo la storia di Alex e Andrea.</p>
   </article>
 
   <!-- Scrollytelling -->
@@ -149,6 +148,11 @@ const jsonLd = {
     padding-left: clamp(1rem, 5vw, 4rem);
   }
 
+  .step[data-step="0"] {
+    align-items: flex-start;
+    padding-top: clamp(1.5rem, 30vh, 5rem);
+  }
+
   .step-content {
     pointer-events: all;
     max-width: 320px;
@@ -186,11 +190,11 @@ const jsonLd = {
     padding-bottom: var(--space-5);
   }
 
-  @media (max-width: 600px) {
-    .step[data-step="0"] {
-      padding-bottom: 20vh;
-    }
+  article.scrolly-prose:first-of-type {
+    padding-bottom: var(--space-3);
+  }
 
+  @media (max-width: 600px) {
     .step-content p {
       font-size: 17px;
     }
