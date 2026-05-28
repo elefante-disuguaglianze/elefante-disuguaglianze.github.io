@@ -75,15 +75,21 @@ const jsonLd = {
       </div>
       <div class="step" data-step="3" role="listitem">
         <div class="step-content">
-          <p>Nel 2024, dopo 45 anni di lavoro, entrambi hanno visto crescere il proprio stipendio. In un anno ora guadagnano quasi 200mila euro in più!</p>
+          <p>Adesso andiamo avanti nel tempo. È il 2024. Il mondo nel frattempo è cambiato. È crollato il muro di Berlino, l'attentato alle Torri Gemelle, la pandemia. È nato Internet, e con lui i social media, Wikipedia, il brainrot.</p>
         </div>
       </div>
+            <div class="step" data-step="4" role="listitem">
+        <div class="step-content">
+          <p>Anche per Andrea e Alex le cose sono cambiate. In un anno ora guadagnano quasi 200mila euro in più!</p>
+        </div>
+      </div>
+
       <div class="step" data-step="-1" role="listitem">
         <div class="step-content">
           <p>Solo che quasi tutti questi soldi in più sono andati ad Andrea.</p>
         </div>
       </div>
-      <div class="step" data-step="4" role="listitem">
+      <div class="step" data-step="5" role="listitem">
         <div class="step-content">
           <p><b>Ad Alex ne sono andati pochissimi.</b></p>
         </div>
@@ -134,10 +140,16 @@ const jsonLd = {
   }
 
   #steps {
-    margin-top: -100vh;
+    margin-top: -100vh; 
     position: relative;
     z-index: 10;
     pointer-events: none;
+  }
+
+  @media (min-width: 600px) {
+    #steps {
+      margin-top: -60vh;
+    }
   }
 
   .step {

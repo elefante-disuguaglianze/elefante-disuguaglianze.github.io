@@ -137,7 +137,7 @@ function step1() {
 function spawnExtras() {
   if (extrasPhase === 1) return; // already at center, nothing to do
   if (extrasPhase === 2) {
-    // Returning to step 3 from step 4: remove released extras, re-spawn at center.
+    // Returning to step 4 from step 5: remove released extras, re-spawn at center.
     // removeExtras() marks circles as "exiting"; the cleanup below removes them instantly.
     removeExtras();
   }
@@ -198,7 +198,7 @@ function releaseExtras() {
   if (extrasPhase === 2) return; // already released
 
   if (extrasPhase === 0) {
-    // Entering step 4 directly (no step 3 visited): spawn first, then release.
+    // Entering step 5 directly (no step 4 visited): spawn first, then release.
     // Extras will fade in while moving to the top group.
     spawnExtras();
     // spawnExtras() guards against width/height === 0; bail if nothing was created.
@@ -297,9 +297,9 @@ const states: Record<number, (args: StateArgs) => void> = {
     yearLabel.transition().duration(TRANSITION_MS).ease(easing).style("opacity", 1);
   },
 
-  3(_args) {
+  3({ direction }) {
     // Step 3 può essere raggiunto saltando step 2 (anchor diretti / scroll
-    // veloce): garantisco split top/bottom e forze coerenti prima di spawnare.
+    // veloce): garantisco split top/bottom e forze coerenti.
     nodes.forEach((n, i) => {
       n.group = i < SHARE_TOP_NODES ? "top" : "bottom";
     });
@@ -308,18 +308,41 @@ const states: Record<number, (args: StateArgs) => void> = {
       .force("x", d3.forceX<SimNode>(width * 0.7).strength(STR_X))
       .force("y", d3.forceY<SimNode>((d) => d.group === "top" ? y_step1_left : y_step1_right).strength(STR_Y));
     circles.transition().duration(TRANSITION_MS).style("opacity", 1);
-    yearLabel.interrupt().text("1980");
-    const labelNode = yearLabel.node()!;
-    yearLabel
-      .transition().duration(TRANSITION_TIME_TRAVEL).ease(easing)
-      .style("opacity", 1)
-      .tween("text", () => (t: number) => {
-        labelNode.textContent = String(Math.round(1980 + 44 * t));
-      });
-    spawnExtras();
+    if (direction === "up") {
+      // Tornando da step 4: i cerchi extra devono sparire; l'anno è già a 2024.
+      removeExtras();
+      yearLabel.interrupt().text("2024");
+      yearLabel.transition().duration(TRANSITION_MS).ease(easing).style("opacity", 1);
+    } else {
+      // Scrolling down: anima l'anno da 1980 a 2024.
+      yearLabel.interrupt().text("1980");
+      const labelNode = yearLabel.node()!;
+      yearLabel
+        .transition().duration(TRANSITION_TIME_TRAVEL).ease(easing)
+        .style("opacity", 1)
+        .tween("text", () => (t: number) => {
+          labelNode.textContent = String(Math.round(1980 + 44 * t));
+        });
+    }
   },
 
   4(_args) {
+    // Step 4 (nuovo): l'anno è fermo a 2024, appaiono i cerchi extra.
+    // Può essere raggiunto direttamente (jump): garantisco setup completo.
+    nodes.forEach((n, i) => {
+      n.group = i < SHARE_TOP_NODES ? "top" : "bottom";
+    });
+    step1();
+    simulation
+      .force("x", d3.forceX<SimNode>(width * 0.7).strength(STR_X))
+      .force("y", d3.forceY<SimNode>((d: SimNode) => d.group === "top" ? y_step1_left : y_step1_right).strength(STR_Y));
+    circles.transition().duration(TRANSITION_MS).style("opacity", 1);
+    yearLabel.interrupt().text("2024");
+    yearLabel.transition().duration(TRANSITION_MS).ease(easing).style("opacity", 1);
+    spawnExtras();
+  },
+
+  5(_args) {
     nodes.forEach((n, i) => {
       n.group = i < SHARE_TOP_NODES ? "top" : "bottom";
     });
