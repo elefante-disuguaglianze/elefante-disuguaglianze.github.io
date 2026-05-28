@@ -6,6 +6,8 @@ import { articles } from "../../content/articles";
 import manIconRed from "../../assets/articles/elefant.png";
 import manIconBlue from "../../assets/articles/elefant_blue.png";
 
+import BrickChart from "../../components/charts/Chart_3.1.astro";
+
 const article = articles.find(a => a.number === 3)!;
 
 const jsonLd = {
@@ -65,7 +67,7 @@ const jsonLd = {
       </div>
       <div class="step" data-step="1" role="listitem">
         <div class="step-content">
-          <p>Nel 1980, in un anno hanno guadagnato in totale circa 190mila euro.</p>
+          <p>Nel 1980, in un anno hanno guadagnato in totale circa l'equivalente di 190mila euro.</p>
         </div>
       </div>
       <div class="step" data-step="2" role="listitem">
@@ -75,7 +77,7 @@ const jsonLd = {
       </div>
       <div class="step" data-step="3" role="listitem">
         <div class="step-content">
-          <p>Adesso andiamo avanti nel tempo. È il 2024. Il mondo nel frattempo è cambiato. È crollato il muro di Berlino, l'attentato alle Torri Gemelle, la pandemia. È nato Internet, e con lui i social media, Wikipedia, il brainrot.</p>
+          <p>Adesso andiamo avanti nel tempo. È il 2024, e il mondo nel frattempo è cambiato. C'è stato il crollo del muro di Berlino, l'attentato alle Torri Gemelle, la pandemia. È nato Internet, e con lui i social media, Wikipedia, il brainrot.</p>
         </div>
       </div>
             <div class="step" data-step="4" role="listitem">
@@ -96,7 +98,7 @@ const jsonLd = {
       </div>
       <div class="step" data-step="-1" role="listitem">
         <div class="step-content">
-          <p>Questo è quello che è successo alla società italiana negli ultimi 45 anni: i ricchi sono diventati sempre più ricchi, mentre gli altri sono rimasti indietro.</p>
+          <p>Questo è quello che è successo alla società italiana negli ultimi 45 anni.</p>
         </div>
       </div>
       <div id="steps-spacer" aria-hidden="true"></div>
@@ -105,8 +107,15 @@ const jsonLd = {
 
   <!-- Outro prose -->
   <article class="prose scrolly-prose">
-    <h2>Qui prosegue l'articolo normale</h2>
-    <p>Il racconto visivo è finito, ma l'articolo continua. Scorri in basso per leggere tutto.</p>
+    <p>Secondo i dati del World Inequality Database, nel 1980, il 10% più povero degli italiani percepiva in media 939 euro annui a parità di potere d’acquisto, pari allo 0,46% del reddito nazionale. Il 10% più ricco guadagnava invece 48.533 euro, il 23,96% del totale.</p>
+
+<p>Oggi, il 10% più povero arriva a 988 euro: poco più di 50 euro in più in oltre quarant’anni, ma con una quota scesa allo 0,34% del totale. Il 10% più ricco ha visto invece il proprio reddito medio salire a 94.403 euro, quasi 50 mila euro in più, arrivando a detenere il 32,31% del reddito nazionale.</p>
+
+<div style="height: 2vh;"></div>
+
+
+<BrickChart />
+
   </article>
 
 </Base>
