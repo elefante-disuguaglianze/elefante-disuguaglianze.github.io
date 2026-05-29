@@ -6,7 +6,7 @@ import { articles } from "../../content/articles";
 import manIconRed from "../../assets/articles/elefant.png";
 import manIconBlue from "../../assets/articles/elefant_blue.png";
 
-import BrickChart from "../../components/charts/Chart_3.1.astro";
+import DistChart from "../../components/charts/Chart_3.2.astro";
 
 const article = articles.find(a => a.number === 3)!;
 
@@ -111,12 +111,24 @@ const jsonLd = {
 
 <p>Oggi, il 10% più povero arriva a 988 euro: poco più di 50 euro in più in oltre quarant’anni, ma con una quota scesa allo 0,34% del totale. Il 10% più ricco ha visto invece il proprio reddito medio salire a 94.403 euro, quasi 50 mila euro in più, arrivando a detenere il 32,31% del reddito nazionale.</p>
 
-<div style="height: 2vh;"></div>
+<p>In altre parole: <b>i redditi più bassi sono rimasti quasi fermi, mentre quelli più alti sono cresciuti rapidamente.</b> I ricchi sono sempre più ricchi, mentre il resto della popolazione arretra o resta fermo.</p>
 
+<details class="chart-accordion" id="dist-chart-accordion">
+  <summary class="chart-accordion__summary">
+    <span class="chart-accordion__label">
+      <span class="chart-accordion__title">Grafico interattivo</span>
+      <span class="chart-accordion__subtitle">Chi ha guadagnato e chi ha perso · 1980–2024 · 100 percentili</span>
+    </span>
+    <svg class="chart-accordion__chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <polyline points="5,8 10,13 15,8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </summary>
+  <div class="chart-accordion__body">
+    <DistChart />
+  </div>
+</details>
 
-<BrickChart />
-
-  </article>
+</article>
 
 </Base>
 
@@ -221,8 +233,75 @@ const jsonLd = {
     }
   }
 
+  /* Accordion per il DistChart */
+  .chart-accordion {
+    border-top: 2px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: var(--space-4) 0;
+  }
+
+  .chart-accordion__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .chart-accordion__summary::-webkit-details-marker { display: none; }
+  .chart-accordion__summary::marker { display: none; }
+
+  .chart-accordion__label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .chart-accordion__title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1.2;
+  }
+
+  .chart-accordion__subtitle {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .chart-accordion__chevron {
+    flex-shrink: 0;
+    color: var(--muted);
+    transition: transform 0.2s ease;
+  }
+
+  .chart-accordion[open] .chart-accordion__chevron {
+    transform: rotate(180deg);
+  }
+
+  .chart-accordion__summary:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  .chart-accordion__body {
+    padding-bottom: var(--space-3);
+  }
+
+  @media (hover: hover) {
+    .chart-accordion__summary:hover .chart-accordion__title {
+      color: var(--link);
+    }
+  }
+
 </style>
 
 <script>
   import "../../scripts/scrollytelling_3";
+
 </script>

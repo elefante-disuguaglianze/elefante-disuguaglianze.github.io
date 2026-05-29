@@ -1,0 +1,415 @@
+---
+// Variazione del reddito medio reale per percentile — Italia 1980→2024
+// Dati: World Inequality Database (WID), variabile aptincj992 (reddito, adulti equal-split).
+// Grafico a barre orizzontali divergenti: una barra per percentile, dal più povero (p0, in alto)
+// al più ricco (p100, in basso). Tooltip interattivo: hover su desktop, tap su mobile.
+// Palette ereditata da Chart_3.1: positivo = --secondary (arancione), negativo = --tertiary (blu).
+---
+
+<figure class="viz-figure">
+  <div class="income-chart" id="income-chart">
+    <header class="ic-head">
+      <p class="ic-kicker">Italia · 1980 → 2024</p>
+      <h2 class="ic-title">Chi ha guadagnato e chi ha perso</h2>
+      <p class="ic-sub">Variazione del reddito medio reale per ogni percentile di popolazione, dal più povero al più ricco.</p>
+    </header>
+
+    <div class="ic-plot">
+      <div class="ic-ylabels" aria-hidden="true">
+          <span style="top:calc(0.5 * var(--ic-row-h))">p0</span>
+          <span style="top:calc(10.5 * var(--ic-row-h))">p10</span>
+          <span style="top:calc(20.5 * var(--ic-row-h))">p20</span>
+          <span style="top:calc(30.5 * var(--ic-row-h))">p30</span>
+          <span style="top:calc(40.5 * var(--ic-row-h))">p40</span>
+          <span style="top:calc(50.5 * var(--ic-row-h))">p50</span>
+          <span style="top:calc(60.5 * var(--ic-row-h))">p60</span>
+          <span style="top:calc(70.5 * var(--ic-row-h))">p70</span>
+          <span style="top:calc(80.5 * var(--ic-row-h))">p80</span>
+          <span style="top:calc(90.5 * var(--ic-row-h))">p90</span>
+          <span style="top:calc(99.5 * var(--ic-row-h))">p100</span>
+      </div>
+      <div class="ic-grid" aria-hidden="true">
+          <span class="gl" style="left:0%"></span>
+          <span class="gl gl-zero" style="left:16.667%"></span>
+          <span class="gl" style="left:33.333%"></span>
+          <span class="gl" style="left:50%"></span>
+          <span class="gl" style="left:66.667%"></span>
+          <span class="gl" style="left:83.333%"></span>
+          <span class="gl" style="left:100%"></span>
+      </div>
+      <div class="ic-rows">
+          <button type="button" class="ic-row" data-lo="0" data-hi="1" data-i1980="0" data-i2024="0" data-abs="0" data-rel=""><span class="ic-bar nd" style="left:16.667%"></span></button>
+          <button type="button" class="ic-row" data-lo="1" data-hi="2" data-i1980="0" data-i2024="0" data-abs="0" data-rel=""><span class="ic-bar nd" style="left:16.667%"></span></button>
+          <button type="button" class="ic-row" data-lo="2" data-hi="3" data-i1980="0" data-i2024="0" data-abs="0" data-rel=""><span class="ic-bar nd" style="left:16.667%"></span></button>
+          <button type="button" class="ic-row" data-lo="3" data-hi="4" data-i1980="0" data-i2024="0" data-abs="0" data-rel=""><span class="ic-bar nd" style="left:16.667%"></span></button>
+          <button type="button" class="ic-row" data-lo="4" data-hi="5" data-i1980="0" data-i2024="0" data-abs="0" data-rel=""><span class="ic-bar nd" style="left:16.667%"></span></button>
+          <button type="button" class="ic-row" data-lo="5" data-hi="6" data-i1980="538.9" data-i2024="474.8" data-abs="-64.09999999999997" data-rel="-11.894600111337905"><span class="ic-bar neg" style="left:8.737%;width:7.93%"></span></button>
+          <button type="button" class="ic-row" data-lo="6" data-hi="7" data-i1980="1616.7" data-i2024="1424.4" data-abs="-192.29999999999995" data-rel="-11.894600111337905"><span class="ic-bar neg" style="left:8.737%;width:7.93%"></span></button>
+          <button type="button" class="ic-row" data-lo="7" data-hi="8" data-i1980="2694.5" data-i2024="2374" data-abs="-320.5" data-rel="-11.894600111337905"><span class="ic-bar neg" style="left:8.737%;width:7.93%"></span></button>
+          <button type="button" class="ic-row" data-lo="8" data-hi="9" data-i1980="3772.4" data-i2024="3323.6" data-abs="-448.8000000000002" data-rel="-11.896935637790273"><span class="ic-bar neg" style="left:8.735%;width:7.931%"></span></button>
+          <button type="button" class="ic-row" data-lo="9" data-hi="10" data-i1980="4850.2" data-i2024="4273.1" data-abs="-577.0999999999995" data-rel="-11.898478413261293"><span class="ic-bar neg" style="left:8.734%;width:7.932%"></span></button>
+          <button type="button" class="ic-row" data-lo="10" data-hi="11" data-i1980="5928" data-i2024="5222.700000000001" data-abs="-705.2999999999993" data-rel="-11.897773279352219"><span class="ic-bar neg" style="left:8.735%;width:7.932%"></span></button>
+          <button type="button" class="ic-row" data-lo="11" data-hi="12" data-i1980="7005.8" data-i2024="6172.3" data-abs="-833.5" data-rel="-11.897285106625944"><span class="ic-bar neg" style="left:8.735%;width:7.932%"></span></button>
+          <button type="button" class="ic-row" data-lo="12" data-hi="13" data-i1980="8083.6" data-i2024="7121.900000000001" data-abs="-961.6999999999998" data-rel="-11.89692711168291"><span class="ic-bar neg" style="left:8.735%;width:7.931%"></span></button>
+          <button type="button" class="ic-row" data-lo="13" data-hi="14" data-i1980="9161.4" data-i2024="8071.5" data-abs="-1089.8999999999996" data-rel="-11.89665334992468"><span class="ic-bar neg" style="left:8.736%;width:7.931%"></span></button>
+          <button type="button" class="ic-row" data-lo="14" data-hi="15" data-i1980="10239.2" data-i2024="9021.1" data-abs="-1218.1000000000004" data-rel="-11.89643722165794"><span class="ic-bar neg" style="left:8.736%;width:7.931%"></span></button>
+          <button type="button" class="ic-row" data-lo="15" data-hi="16" data-i1980="11317.1" data-i2024="9970.7" data-abs="-1346.3999999999996" data-rel="-11.897040761325773"><span class="ic-bar neg" style="left:8.735%;width:7.931%"></span></button>
+          <button type="button" class="ic-row" data-lo="16" data-hi="17" data-i1980="12394.9" data-i2024="10920.3" data-abs="-1474.6000000000004" data-rel="-11.896828534316539"><span class="ic-bar neg" style="left:8.735%;width:7.931%"></span></button>
+          <button type="button" class="ic-row" data-lo="17" data-hi="18" data-i1980="13472.7" data-i2024="11869.8" data-abs="-1602.9000000000015" data-rel="-11.89739250484314"><span class="ic-bar neg" style="left:8.735%;width:7.932%"></span></button>
+          <button type="button" class="ic-row" data-lo="18" data-hi="19" data-i1980="14550.5" data-i2024="12819.4" data-abs="-1731.1000000000004" data-rel="-11.897185663722897"><span class="ic-bar neg" style="left:8.735%;width:7.931%"></span></button>
+          <button type="button" class="ic-row" data-lo="19" data-hi="20" data-i1980="15628.3" data-i2024="13769" data-abs="-1859.2999999999993" data-rel="-11.89700735204724"><span class="ic-bar neg" style="left:8.735%;width:7.931%"></span></button>
+          <button type="button" class="ic-row" data-lo="20" data-hi="21" data-i1980="16167.2" data-i2024="14243.8" data-abs="-1923.4000000000015" data-rel="-11.89692711168292"><span class="ic-bar neg" style="left:8.735%;width:7.931%"></span></button>
+          <button type="button" class="ic-row" data-lo="21" data-hi="22" data-i1980="16871.5" data-i2024="14880" data-abs="-1991.5" data-rel="-11.803929703938598"><span class="ic-bar neg" style="left:8.797%;width:7.869%"></span></button>
+          <button type="button" class="ic-row" data-lo="22" data-hi="23" data-i1980="17518.2" data-i2024="15451.4" data-abs="-2066.800000000001" data-rel="-11.798015777876724"><span class="ic-bar neg" style="left:8.801%;width:7.865%"></span></button>
+          <button type="button" class="ic-row" data-lo="23" data-hi="24" data-i1980="18011.3" data-i2024="16066" data-abs="-1945.2999999999993" data-rel="-10.800441944779104"><span class="ic-bar neg" style="left:9.466%;width:7.2%"></span></button>
+          <button type="button" class="ic-row" data-lo="24" data-hi="25" data-i1980="18319.5" data-i2024="16526.2" data-abs="-1793.2999999999993" data-rel="-9.78902262616337"><span class="ic-bar neg" style="left:10.141%;width:6.526%"></span></button>
+          <button type="button" class="ic-row" data-lo="25" data-hi="26" data-i1980="18621.6" data-i2024="16853.5" data-abs="-1768.0999999999985" data-rel="-9.494887657344153"><span class="ic-bar neg" style="left:10.337%;width:6.33%"></span></button>
+          <button type="button" class="ic-row" data-lo="26" data-hi="27" data-i1980="18949" data-i2024="17281.8" data-abs="-1667.2000000000007" data-rel="-8.798353475117427"><span class="ic-bar neg" style="left:10.801%;width:5.866%"></span></button>
+          <button type="button" class="ic-row" data-lo="27" data-hi="28" data-i1980="19287.5" data-i2024="17682.2" data-abs="-1605.2999999999993" data-rel="-8.32300712896954"><span class="ic-bar neg" style="left:11.118%;width:5.549%"></span></button>
+          <button type="button" class="ic-row" data-lo="28" data-hi="29" data-i1980="19592.7" data-i2024="18602.6" data-abs="-990.1000000000022" data-rel="-5.053412750667352"><span class="ic-bar neg" style="left:13.298%;width:3.369%"></span></button>
+          <button type="button" class="ic-row" data-lo="29" data-hi="30" data-i1980="19902.9" data-i2024="19529.1" data-abs="-373.8000000000029" data-rel="-1.878118264172568"><span class="ic-bar neg" style="left:15.415%;width:1.252%"></span></button>
+          <button type="button" class="ic-row" data-lo="30" data-hi="31" data-i1980="20147.4" data-i2024="19884.3" data-abs="-263.1000000000022" data-rel="-1.3058756961196072"><span class="ic-bar neg" style="left:15.796%;width:0.871%"></span></button>
+          <button type="button" class="ic-row" data-lo="31" data-hi="32" data-i1980="20276.7" data-i2024="20838.6" data-abs="561.8999999999978" data-rel="2.7711609877346888"><span class="ic-bar pos" style="left:16.667%;width:1.847%"></span></button>
+          <button type="button" class="ic-row" data-lo="32" data-hi="33" data-i1980="20427.3" data-i2024="21039.4" data-abs="612.1000000000022" data-rel="2.996480200515994"><span class="ic-bar pos" style="left:16.667%;width:1.998%"></span></button>
+          <button type="button" class="ic-row" data-lo="33" data-hi="34" data-i1980="20704.1" data-i2024="21040.4" data-abs="336.3000000000029" data-rel="1.6243159567428833"><span class="ic-bar pos" style="left:16.667%;width:1.083%"></span></button>
+          <button type="button" class="ic-row" data-lo="34" data-hi="35" data-i1980="21011.3" data-i2024="21614.8" data-abs="603.5" data-rel="2.872263972243516"><span class="ic-bar pos" style="left:16.667%;width:1.915%"></span></button>
+          <button type="button" class="ic-row" data-lo="35" data-hi="36" data-i1980="21331.6" data-i2024="21889.7" data-abs="558.1000000000022" data-rel="2.6163063248889173"><span class="ic-bar pos" style="left:16.667%;width:1.744%"></span></button>
+          <button type="button" class="ic-row" data-lo="36" data-hi="37" data-i1980="21625.7" data-i2024="21988.5" data-abs="362.7999999999993" data-rel="1.677633556370428"><span class="ic-bar pos" style="left:16.667%;width:1.118%"></span></button>
+          <button type="button" class="ic-row" data-lo="37" data-hi="38" data-i1980="21886.4" data-i2024="23234.2" data-abs="1347.7999999999993" data-rel="6.158162146355717"><span class="ic-bar pos" style="left:16.667%;width:4.105%"></span></button>
+          <button type="button" class="ic-row" data-lo="38" data-hi="39" data-i1980="22141" data-i2024="23291.9" data-abs="1150.9000000000015" data-rel="5.198048868614791"><span class="ic-bar pos" style="left:16.667%;width:3.465%"></span></button>
+          <button type="button" class="ic-row" data-lo="39" data-hi="40" data-i1980="22565.4" data-i2024="24134" data-abs="1568.5999999999985" data-rel="6.9513502973578944"><span class="ic-bar pos" style="left:16.667%;width:4.634%"></span></button>
+          <button type="button" class="ic-row" data-lo="40" data-hi="41" data-i1980="23036.3" data-i2024="24255.4" data-abs="1219.1000000000022" data-rel="5.2920824958869295"><span class="ic-bar pos" style="left:16.667%;width:3.528%"></span></button>
+          <button type="button" class="ic-row" data-lo="41" data-hi="42" data-i1980="23472.8" data-i2024="24733.1" data-abs="1260.2999999999993" data-rel="5.369193279029338"><span class="ic-bar pos" style="left:16.667%;width:3.579%"></span></button>
+          <button type="button" class="ic-row" data-lo="42" data-hi="43" data-i1980="23845.6" data-i2024="24734.1" data-abs="888.5" data-rel="3.7260542825510834"><span class="ic-bar pos" style="left:16.667%;width:2.484%"></span></button>
+          <button type="button" class="ic-row" data-lo="43" data-hi="44" data-i1980="24311.5" data-i2024="25760.5" data-abs="1449" data-rel="5.960142319478434"><span class="ic-bar pos" style="left:16.667%;width:3.973%"></span></button>
+          <button type="button" class="ic-row" data-lo="44" data-hi="45" data-i1980="24797.5" data-i2024="26760.2" data-abs="1962.7000000000007" data-rel="7.914910777296091"><span class="ic-bar pos" style="left:16.667%;width:5.277%"></span></button>
+          <button type="button" class="ic-row" data-lo="45" data-hi="46" data-i1980="25239.1" data-i2024="26761.2" data-abs="1522.1000000000022" data-rel="6.030722173136138"><span class="ic-bar pos" style="left:16.667%;width:4.02%"></span></button>
+          <button type="button" class="ic-row" data-lo="46" data-hi="47" data-i1980="25586.6" data-i2024="26956.8" data-abs="1370.2000000000007" data-rel="5.355146834671287"><span class="ic-bar pos" style="left:16.667%;width:3.57%"></span></button>
+          <button type="button" class="ic-row" data-lo="47" data-hi="48" data-i1980="25976.7" data-i2024="27492.1" data-abs="1515.3999999999978" data-rel="5.833689421674038"><span class="ic-bar pos" style="left:16.667%;width:3.889%"></span></button>
+          <button type="button" class="ic-row" data-lo="48" data-hi="49" data-i1980="26348.5" data-i2024="27814.3" data-abs="1465.7999999999993" data-rel="5.563125035580763"><span class="ic-bar pos" style="left:16.667%;width:3.709%"></span></button>
+          <button type="button" class="ic-row" data-lo="49" data-hi="50" data-i1980="26747.7" data-i2024="28430" data-abs="1682.2999999999993" data-rel="6.289512743151748"><span class="ic-bar pos" style="left:16.667%;width:4.193%"></span></button>
+          <button type="button" class="ic-row" data-lo="50" data-hi="51" data-i1980="27128.6" data-i2024="28762.5" data-abs="1633.9000000000015" data-rel="6.022795131337411"><span class="ic-bar pos" style="left:16.667%;width:4.015%"></span></button>
+          <button type="button" class="ic-row" data-lo="51" data-hi="52" data-i1980="27520.7" data-i2024="29471.8" data-abs="1951.0999999999985" data-rel="7.089572576278935"><span class="ic-bar pos" style="left:16.667%;width:4.726%"></span></button>
+          <button type="button" class="ic-row" data-lo="52" data-hi="53" data-i1980="27914.7" data-i2024="29651.9" data-abs="1737.2000000000007" data-rel="6.223244383783455"><span class="ic-bar pos" style="left:16.667%;width:4.149%"></span></button>
+          <button type="button" class="ic-row" data-lo="53" data-hi="54" data-i1980="28244.1" data-i2024="30647.4" data-abs="2403.300000000003" data-rel="8.509033745100748"><span class="ic-bar pos" style="left:16.667%;width:5.673%"></span></button>
+          <button type="button" class="ic-row" data-lo="54" data-hi="55" data-i1980="28559.4" data-i2024="30741.1" data-abs="2181.699999999997" data-rel="7.6391660889234325"><span class="ic-bar pos" style="left:16.667%;width:5.093%"></span></button>
+          <button type="button" class="ic-row" data-lo="55" data-hi="56" data-i1980="28913.1" data-i2024="31230.1" data-abs="2317" data-rel="8.013668544708107"><span class="ic-bar pos" style="left:16.667%;width:5.342%"></span></button>
+          <button type="button" class="ic-row" data-lo="56" data-hi="57" data-i1980="29318.2" data-i2024="31544.1" data-abs="2225.899999999998" data-rel="7.592212345914806"><span class="ic-bar pos" style="left:16.667%;width:5.061%"></span></button>
+          <button type="button" class="ic-row" data-lo="57" data-hi="58" data-i1980="29794.2" data-i2024="31545.2" data-abs="1751" data-rel="5.876982768458294"><span class="ic-bar pos" style="left:16.667%;width:3.918%"></span></button>
+          <button type="button" class="ic-row" data-lo="58" data-hi="59" data-i1980="30191.3" data-i2024="32414" data-abs="2222.7000000000007" data-rel="7.362054631632287"><span class="ic-bar pos" style="left:16.667%;width:4.908%"></span></button>
+          <button type="button" class="ic-row" data-lo="59" data-hi="60" data-i1980="30616.7" data-i2024="32799" data-abs="2182.2999999999993" data-rel="7.127809332815094"><span class="ic-bar pos" style="left:16.667%;width:4.752%"></span></button>
+          <button type="button" class="ic-row" data-lo="60" data-hi="61" data-i1980="31063.3" data-i2024="33238.6" data-abs="2175.2999999999993" data-rel="7.002797513464443"><span class="ic-bar pos" style="left:16.667%;width:4.669%"></span></button>
+          <button type="button" class="ic-row" data-lo="61" data-hi="62" data-i1980="31502.8" data-i2024="33942.8" data-abs="2440.0000000000036" data-rel="7.745343271074323"><span class="ic-bar pos" style="left:16.667%;width:5.164%"></span></button>
+          <button type="button" class="ic-row" data-lo="62" data-hi="63" data-i1980="31926.2" data-i2024="34208.4" data-abs="2282.2000000000007" data-rel="7.148360907342566"><span class="ic-bar pos" style="left:16.667%;width:4.766%"></span></button>
+          <button type="button" class="ic-row" data-lo="63" data-hi="64" data-i1980="32340.5" data-i2024="34529.6" data-abs="2189.0999999999985" data-rel="6.768912045268305"><span class="ic-bar pos" style="left:16.667%;width:4.513%"></span></button>
+          <button type="button" class="ic-row" data-lo="64" data-hi="65" data-i1980="32820.5" data-i2024="34946.5" data-abs="2126" data-rel="6.47765878033546"><span class="ic-bar pos" style="left:16.667%;width:4.318%"></span></button>
+          <button type="button" class="ic-row" data-lo="65" data-hi="66" data-i1980="33260" data-i2024="35875.1" data-abs="2615.0999999999985" data-rel="7.86259771497293"><span class="ic-bar pos" style="left:16.667%;width:5.242%"></span></button>
+          <button type="button" class="ic-row" data-lo="66" data-hi="67" data-i1980="33694.5" data-i2024="36376.5" data-abs="2682" data-rel="7.959756043271149"><span class="ic-bar pos" style="left:16.667%;width:5.307%"></span></button>
+          <button type="button" class="ic-row" data-lo="67" data-hi="68" data-i1980="34178.5" data-i2024="37421.4" data-abs="3242.9000000000015" data-rel="9.488128501835957"><span class="ic-bar pos" style="left:16.667%;width:6.325%"></span></button>
+          <button type="button" class="ic-row" data-lo="68" data-hi="69" data-i1980="34693.8" data-i2024="37681.8" data-abs="2988" data-rel="8.612489839683168"><span class="ic-bar pos" style="left:16.667%;width:5.742%"></span></button>
+          <button type="button" class="ic-row" data-lo="69" data-hi="70" data-i1980="35185.9" data-i2024="38456" data-abs="3270.0999999999985" data-rel="9.293779610582643"><span class="ic-bar pos" style="left:16.667%;width:6.196%"></span></button>
+          <button type="button" class="ic-row" data-lo="70" data-hi="71" data-i1980="35633.6" data-i2024="39042.8" data-abs="3409.2000000000044" data-rel="9.567374612725077"><span class="ic-bar pos" style="left:16.667%;width:6.378%"></span></button>
+          <button type="button" class="ic-row" data-lo="71" data-hi="72" data-i1980="36117.6" data-i2024="39648.10000000001" data-abs="3530.5000000000146" data-rel="9.775012736172982"><span class="ic-bar pos" style="left:16.667%;width:6.517%"></span></button>
+          <button type="button" class="ic-row" data-lo="72" data-hi="73" data-i1980="36701.6" data-i2024="40481" data-abs="3779.4000000000015" data-rel="10.297643699457248"><span class="ic-bar pos" style="left:16.667%;width:6.865%"></span></button>
+          <button type="button" class="ic-row" data-lo="73" data-hi="74" data-i1980="37228.1" data-i2024="41273.7" data-abs="4045.5999999999985" data-rel="10.867060097077207"><span class="ic-bar pos" style="left:16.667%;width:7.245%"></span></button>
+          <button type="button" class="ic-row" data-lo="74" data-hi="75" data-i1980="37707" data-i2024="42113.7" data-abs="4406.699999999997" data-rel="11.686689474102941"><span class="ic-bar pos" style="left:16.667%;width:7.791%"></span></button>
+          <button type="button" class="ic-row" data-lo="75" data-hi="76" data-i1980="38197.1" data-i2024="42919.8" data-abs="4722.700000000004" data-rel="12.364027635605845"><span class="ic-bar pos" style="left:16.667%;width:8.243%"></span></button>
+          <button type="button" class="ic-row" data-lo="76" data-hi="77" data-i1980="38792.2" data-i2024="43802.10000000001" data-abs="5009.900000000016" data-rel="12.9147096581272"><span class="ic-bar pos" style="left:16.667%;width:8.61%"></span></button>
+          <button type="button" class="ic-row" data-lo="77" data-hi="78" data-i1980="39395.5" data-i2024="44546.4" data-abs="5150.9000000000015" data-rel="13.074843573504591"><span class="ic-bar pos" style="left:16.667%;width:8.717%"></span></button>
+          <button type="button" class="ic-row" data-lo="78" data-hi="79" data-i1980="40048.2" data-i2024="45393.60000000001" data-abs="5345.400000000016" data-rel="13.347416363282294"><span class="ic-bar pos" style="left:16.667%;width:8.898%"></span></button>
+          <button type="button" class="ic-row" data-lo="79" data-hi="80" data-i1980="40694.9" data-i2024="46329.4" data-abs="5634.5" data-rel="13.845715310763751"><span class="ic-bar pos" style="left:16.667%;width:9.23%"></span></button>
+          <button type="button" class="ic-row" data-lo="80" data-hi="81" data-i1980="41381" data-i2024="47078.9" data-abs="5697.9000000000015" data-rel="13.769362751021008"><span class="ic-bar pos" style="left:16.667%;width:9.18%"></span></button>
+          <button type="button" class="ic-row" data-lo="81" data-hi="82" data-i1980="42058" data-i2024="48145.4" data-abs="6087.4000000000015" data-rel="14.473821865043512"><span class="ic-bar pos" style="left:16.667%;width:9.649%"></span></button>
+          <button type="button" class="ic-row" data-lo="82" data-hi="83" data-i1980="42759.3" data-i2024="49162.5" data-abs="6403.199999999997" data-rel="14.974987897369685"><span class="ic-bar pos" style="left:16.667%;width:9.983%"></span></button>
+          <button type="button" class="ic-row" data-lo="83" data-hi="84" data-i1980="43419.10000000001" data-i2024="50406.10000000001" data-abs="6987" data-rel="16.09199637947354"><span class="ic-bar pos" style="left:16.667%;width:10.728%"></span></button>
+          <button type="button" class="ic-row" data-lo="84" data-hi="85" data-i1980="44144.60000000001" data-i2024="51489.2" data-abs="7344.599999999984" data-rel="16.637595538299088"><span class="ic-bar pos" style="left:16.667%;width:11.092%"></span></button>
+          <button type="button" class="ic-row" data-lo="85" data-hi="86" data-i1980="44908.5" data-i2024="52824.4" data-abs="7915.9000000000015" data-rel="17.626729906365156"><span class="ic-bar pos" style="left:16.667%;width:11.751%"></span></button>
+          <button type="button" class="ic-row" data-lo="86" data-hi="87" data-i1980="45766.4" data-i2024="54253.3" data-abs="8486.900000000001" data-rel="18.543953642847157"><span class="ic-bar pos" style="left:16.667%;width:12.363%"></span></button>
+          <button type="button" class="ic-row" data-lo="87" data-hi="88" data-i1980="46333.2" data-i2024="56122.8" data-abs="9789.600000000006" data-rel="21.128693895522012"><span class="ic-bar pos" style="left:16.667%;width:14.086%"></span></button>
+          <button type="button" class="ic-row" data-lo="88" data-hi="89" data-i1980="47017.3" data-i2024="58899.3" data-abs="11882" data-rel="25.2715489830339"><span class="ic-bar pos" style="left:16.667%;width:16.848%"></span></button>
+          <button type="button" class="ic-row" data-lo="89" data-hi="90" data-i1980="48352.10000000001" data-i2024="60964.4" data-abs="12612.299999999988" data-rel="26.084285894511282"><span class="ic-bar pos" style="left:16.667%;width:17.39%"></span></button>
+          <button type="button" class="ic-row" data-lo="90" data-hi="91" data-i1980="49854.7" data-i2024="63481.5" data-abs="13626.800000000003" data-rel="27.33302978455392"><span class="ic-bar pos" style="left:16.667%;width:18.222%"></span></button>
+          <button type="button" class="ic-row" data-lo="91" data-hi="92" data-i1980="51349.10000000001" data-i2024="66891.1" data-abs="15541.999999999993" data-rel="30.267326983335607"><span class="ic-bar pos" style="left:16.667%;width:20.178%"></span></button>
+          <button type="button" class="ic-row" data-lo="92" data-hi="93" data-i1980="53107.3" data-i2024="70925.6" data-abs="17818.300000000003" data-rel="33.551507984778"><span class="ic-bar pos" style="left:16.667%;width:22.368%"></span></button>
+          <button type="button" class="ic-row" data-lo="93" data-hi="94" data-i1980="55221.2" data-i2024="75810.5" data-abs="20589.300000000003" data-rel="37.285136867724724"><span class="ic-bar pos" style="left:16.667%;width:24.857%"></span></button>
+          <button type="button" class="ic-row" data-lo="94" data-hi="95" data-i1980="57838.2" data-i2024="81907" data-abs="24068.800000000003" data-rel="41.61401980006294"><span class="ic-bar pos" style="left:16.667%;width:27.743%"></span></button>
+          <button type="button" class="ic-row" data-lo="95" data-hi="96" data-i1980="61210.10000000001" data-i2024="89837.1" data-abs="28626.999999999993" data-rel="46.768425472266806"><span class="ic-bar pos" style="left:16.667%;width:31.179%"></span></button>
+          <button type="button" class="ic-row" data-lo="96" data-hi="97" data-i1980="65816.8" data-i2024="100796.8" data-abs="34980" data-rel="53.14752464416379"><span class="ic-bar pos" style="left:16.667%;width:35.432%"></span></button>
+          <button type="button" class="ic-row" data-lo="97" data-hi="98" data-i1980="72748.5" data-i2024="117476.4" data-abs="44727.899999999994" data-rel="61.482917173549964"><span class="ic-bar pos" style="left:16.667%;width:40.989%"></span></button>
+          <button type="button" class="ic-row" data-lo="98" data-hi="99" data-i1980="85367" data-i2024="147807.8" data-abs="62440.79999999999" data-rel="73.14395492403388"><span class="ic-bar pos" style="left:16.667%;width:48.763%"></span></button>
+          <button type="button" class="ic-row" data-lo="99" data-hi="100" data-i1980="144218.8" data-i2024="319543.8" data-abs="175325" data-rel="121.5687552524359"><span class="ic-bar pos" style="left:16.667%;width:81.046%"></span><span class="ic-callout">+121,6% &middot; top 1%</span></button>
+      </div>
+      <div class="ic-tooltip" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="ic-axis" aria-hidden="true">
+        <span style="left:0%">−25%</span>
+        <span style="left:16.667%">0</span>
+        <span style="left:33.333%">+25%</span>
+        <span style="left:50%">+50%</span>
+        <span style="left:66.667%">+75%</span>
+        <span style="left:83.333%">+100%</span>
+        <span style="left:100%">+125%</span>
+    </div>
+    <p class="ic-axis-title">Variazione % del reddito medio (1980–2024)</p>
+
+    <footer class="ic-foot">
+      <div class="ic-legend">
+        <span class="li"><span class="sw" style="background:var(--ic-pos)"></span>In aumento</span>
+        <span class="li"><span class="sw" style="background:var(--ic-neg)"></span>In calo</span>
+      </div>
+      <span class="ic-src">Fonte: World Inequality Database</span>
+    </footer>
+    <p class="ic-hint">Passa il mouse o tocca una barra per i dettagli</p>
+
+    <noscript>
+      <table>
+        <caption>Variazione del reddito medio reale per percentile — Italia 1980–2024</caption>
+        <thead>
+          <tr><th>Fascia</th><th>Variazione %</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>p0–p1</td><td>n/d</td></tr>
+          <tr><td>p10–p11</td><td>−11,9%</td></tr>
+          <tr><td>p20–p21</td><td>−11,9%</td></tr>
+          <tr><td>p30–p31</td><td>−1,3%</td></tr>
+          <tr><td>p40–p41</td><td>+5,3%</td></tr>
+          <tr><td>p50–p51</td><td>+6,0%</td></tr>
+          <tr><td>p60–p61</td><td>+7,0%</td></tr>
+          <tr><td>p70–p71</td><td>+9,6%</td></tr>
+          <tr><td>p80–p81</td><td>+13,8%</td></tr>
+          <tr><td>p90–p91</td><td>+27,3%</td></tr>
+          <tr><td>p99–p100 (top 1%)</td><td>+121,6%</td></tr>
+        </tbody>
+      </table>
+    </noscript>
+  </div>
+</figure>
+
+<style is:global>
+  .income-chart {
+    /* Palette ereditata da Chart_3.1 (variabili globali del tema) con fallback */
+    --ic-pos:    var(--secondary, #ff7300);
+    --ic-neg:    var(--tertiary,  #0167ce);
+    --ic-bg:     var(--bg, #ffffff);
+    --ic-fg:     var(--fg, #1a1a1a);
+    --ic-muted:  var(--muted, #5b5b5b);
+    --ic-grid:   #eeeeee;
+    --ic-zero:   var(--fg, #1a1a1a);
+    --label-w:   46px;
+    --ic-row-h:  6px;
+    --ic-bar-pad: 0.5px;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  .income-chart {
+    box-sizing: border-box;
+    color: var(--ic-fg);
+    background: var(--ic-bg);
+    padding: 28px 24px 22px;
+  }
+  .income-chart *, .income-chart *::before, .income-chart *::after { box-sizing: border-box; }
+
+  /* Header */
+  .income-chart .ic-head { margin-bottom: 22px; }
+  .income-chart .ic-kicker {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ic-pos); margin: 0 0 9px;
+  }
+  .income-chart .ic-title {
+    font-size: 23px; font-weight: 600; line-height: 1.18;
+    letter-spacing: -0.01em; margin: 0 0 7px; text-wrap: balance;
+  }
+  .income-chart .ic-sub {
+    font-size: 13px; line-height: 1.4; color: var(--ic-muted); margin: 0; max-width: 36ch;
+  }
+
+  /* Plot */
+  .income-chart .ic-plot { position: relative; }
+  .income-chart .ic-ylabels { position: absolute; left: 0; top: 0; width: var(--label-w); height: calc(100 * var(--ic-row-h)); pointer-events: none; }
+  .income-chart .ic-ylabels span {
+    position: absolute; right: 12px; transform: translateY(-50%);
+    font-size: 10.5px; font-variant-numeric: tabular-nums; color: var(--ic-muted); white-space: nowrap;
+  }
+  .income-chart .ic-grid {
+    position: absolute; left: var(--label-w); right: 0; top: 0; height: calc(100 * var(--ic-row-h)); pointer-events: none;
+  }
+  .income-chart .ic-grid .gl {
+    position: absolute; top: 0; bottom: 0; width: 1px; background: var(--ic-grid); transform: translateX(-0.5px);
+  }
+  .income-chart .ic-grid .gl-zero { background: var(--ic-zero); width: 1.5px; opacity: 0.85; }
+
+  .income-chart .ic-rows { position: relative; margin-left: var(--label-w); }
+  .income-chart .ic-row {
+    display: block; position: relative; width: 100%; height: var(--ic-row-h);
+    margin: 0; padding: 0; border: 0; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .income-chart .ic-row::before {
+    content: ''; position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: transparent; transition: background .08s;
+  }
+  .income-chart .ic-row.active::before { background: rgba(0,0,0,0.06); }
+  .income-chart .ic-bar {
+    position: absolute; top: var(--ic-bar-pad); bottom: var(--ic-bar-pad); min-width: 1px; transition: filter .08s;
+  }
+  .income-chart .ic-bar.pos { background: var(--ic-pos); }
+  .income-chart .ic-bar.neg { background: var(--ic-neg); }
+  .income-chart .ic-bar.nd  { width: 9px; background: repeating-linear-gradient(90deg, var(--ic-grid) 0 2px, transparent 2px 4px); }
+  .income-chart .ic-row.active .ic-bar.pos,
+  .income-chart .ic-row.active .ic-bar.neg { filter: brightness(1.12); }
+
+  .income-chart .ic-callout {
+    position: absolute; right: 0; bottom: 100%; margin-bottom: 2px;
+    font-size: 10px; font-weight: 600; color: var(--ic-pos); white-space: nowrap; letter-spacing: 0.01em;
+  }
+
+  /* Tooltip */
+  .income-chart .ic-tooltip {
+    position: absolute; z-index: 5; left: 0; top: 0; min-width: 184px; max-width: 240px;
+    background: var(--ic-fg); color: #fff; padding: 11px 13px 12px; border-radius: 7px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.22); opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity .1s; font-size: 12px;
+  }
+  .income-chart .ic-tooltip.show { opacity: 1; visibility: visible; }
+  .income-chart .tt-head { font-size: 11px; letter-spacing: 0.03em; opacity: 0.72; margin-bottom: 4px; }
+  .income-chart .tt-big { font-size: 21px; font-weight: 700; line-height: 1; margin-bottom: 9px; letter-spacing: -0.01em; }
+  .income-chart .tt-big.pos { color: #ff9e4d; }
+  .income-chart .tt-big.neg { color: #6fb0ee; }
+  .income-chart .tt-nd { font-size: 12px; opacity: 0.8; line-height: 1.4; }
+  .income-chart .tt-rows { margin: 0; display: grid; gap: 5px; }
+  .income-chart .tt-rows > div { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+  .income-chart .tt-rows dt { margin: 0; font-size: 11px; opacity: 0.66; }
+  .income-chart .tt-rows dd { margin: 0; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .income-chart .tt-rows dd.pos { color: #ff9e4d; }
+  .income-chart .tt-rows dd.neg { color: #6fb0ee; }
+
+  /* Axis */
+  .income-chart .ic-axis {
+    position: relative; height: 16px; margin: 9px 0 0 var(--label-w);
+  }
+  .income-chart .ic-axis span {
+    position: absolute; top: 0; transform: translateX(-50%);
+    font-size: 9.5px; color: var(--ic-muted); white-space: nowrap; font-variant-numeric: tabular-nums;
+  }
+  .income-chart .ic-axis-title {
+    margin: 6px 0 0 var(--label-w); font-size: 10px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ic-muted); text-align: center;
+  }
+
+  /* Footer */
+  .income-chart .ic-foot {
+    margin-top: 20px; padding-top: 15px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  .income-chart .ic-legend { display: flex; gap: 16px; }
+  .income-chart .ic-legend .li {
+    display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--ic-fg); white-space: nowrap;
+  }
+  .income-chart .ic-legend .sw { width: 12px; height: 12px; flex-shrink: 0; }
+  .income-chart .ic-hint { font-size: 10.5px; color: var(--ic-muted); margin: 9px 0 0; text-align: center; letter-spacing: 0.01em; }
+  .income-chart .ic-src {
+    font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ic-muted);
+  }
+
+  figure.viz-figure:has(.income-chart) {
+    margin: 0;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+
+  @media (max-width: 768px) {
+    .income-chart {
+      --ic-row-h:  28px;
+      --ic-bar-pad: 8px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .income-chart { padding: 22px 15px 18px; --label-w: 40px; }
+    .income-chart .ic-title { font-size: 20px; }
+    .income-chart .ic-axis span { font-size: 9px; }
+    .income-chart .ic-callout { font-size: 9px; }
+  }
+
+  /* Fallback noscript */
+  .income-chart noscript table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 12px; }
+  .income-chart noscript th, .income-chart noscript td { text-align: left; padding: 6px 10px; }
+  .income-chart noscript th { background: #f0f0f0; font-weight: 600; }
+</style>
+
+<script is:inline>
+(function(){
+  var chart = document.getElementById('income-chart');
+  if(!chart) return;
+  var plot = chart.querySelector('.ic-plot');
+  var tip  = chart.querySelector('.ic-tooltip');
+  var rows = Array.prototype.slice.call(chart.querySelectorAll('.ic-row'));
+  var hoverCapable = window.matchMedia('(hover: hover)').matches;
+  var eur = new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+  var pinned = null;
+
+  function fmtPct(v){ var n=parseFloat(v); return (n>=0?'+':'\u2212')+Math.abs(n).toFixed(1).replace('.',',')+'%'; }
+  function fmtEurSigned(v){ return (v>=0?'+':'\u2212')+eur.format(Math.abs(v)); }
+
+  function buildTip(row){
+    var lo=row.getAttribute('data-lo'), hi=row.getAttribute('data-hi');
+    var rel=row.getAttribute('data-rel');
+    var i1=parseFloat(row.getAttribute('data-i1980'));
+    var i2=parseFloat(row.getAttribute('data-i2024'));
+    var ab=parseFloat(row.getAttribute('data-abs'));
+    var head = (hi==='100') ? 'Top 1% \u00b7 p99\u2013p100' : 'Percentile '+lo+'\u2013'+hi;
+    var html = '<div class="tt-head">'+head+'</div>';
+    if(rel===''){
+      html += '<div class="tt-nd">Reddito medio nullo &middot; dato non disponibile</div>';
+    } else {
+      var cls = parseFloat(rel)>=0 ? 'pos' : 'neg';
+      html += '<div class="tt-big '+cls+'">'+fmtPct(rel)+'</div>';
+      html += '<dl class="tt-rows">';
+      html += '<div><dt>Reddito medio 1980</dt><dd>'+eur.format(i1)+'</dd></div>';
+      html += '<div><dt>Reddito medio 2024</dt><dd>'+eur.format(i2)+'</dd></div>';
+      html += '<div><dt>Variazione</dt><dd class="'+cls+'">'+fmtEurSigned(ab)+'</dd></div>';
+      html += '</dl>';
+    }
+    tip.innerHTML = html;
+  }
+
+  function position(row){
+    var pr = plot.getBoundingClientRect();
+    var rr = row.getBoundingClientRect();
+    var center = (rr.top - pr.top) + rr.height/2;
+    var th = tip.offsetHeight, tw = tip.offsetWidth;
+    var top = center - th - 10;
+    if(top < 2) top = center + 10;
+    if(top + th > plot.clientHeight - 2) top = plot.clientHeight - th - 2;
+    if(top < 2) top = 2;
+    var left = (plot.clientWidth - tw)/2;
+    if(left < 2) left = 2;
+    tip.style.top = top+'px';
+    tip.style.left = left+'px';
+  }
+  function show(row){
+    rows.forEach(function(r){ r.classList.remove('active'); });
+    row.classList.add('active');
+    buildTip(row);
+    tip.classList.add('show');
+    position(row);
+  }
+  function hide(){
+    tip.classList.remove('show');
+    rows.forEach(function(r){ r.classList.remove('active'); });
+    pinned = null;
+  }
+
+  rows.forEach(function(row){
+    if(hoverCapable){
+      row.addEventListener('mouseenter', function(){ if(!pinned) show(row); });
+      row.addEventListener('mouseleave', function(){ if(!pinned) hide(); });
+    }
+    row.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(pinned === row){ hide(); }
+      else { pinned = row; show(row); }
+    });
+  });
+  document.addEventListener('click', function(){ if(pinned) hide(); });
+  window.addEventListener('resize', function(){ if(pinned) position(pinned); });
+})();
+</script>
