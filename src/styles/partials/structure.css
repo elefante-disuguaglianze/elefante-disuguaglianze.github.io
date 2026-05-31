@@ -21,6 +21,7 @@
 
 .prose h1{ font-size: 28px; letter-spacing: -0.02em; margin: 0 0 var(--space-3); }
 .prose h2{ font-size: 18px; margin: var(--space-5) 0 var(--space-2); }
+.prose{ font-size: 18px;}
 .prose p{ margin: 0 0 var(--space-3); color: var(--fg); }
 .prose .lead{ color: var(--muted); max-width: 65ch; }
 .prose code{ font-family: var(--font-mono); font-size: 0.95em; }
