@@ -2,7 +2,7 @@
 // Illustrazione "1 mattoncino vs 1000" — disuguaglianza del reddito, Italia 1980→2024.
 // Concetto: 1 mattoncino = 50 €. Il 10% più povero ha guadagnato 50 € in 45 anni (1 mattoncino);
 // il 10% più ricco ha guadagnato ~50.000 € → 1000 mattoncini.
-// Palette ereditata da Chart_3.2: arancione = --secondary. Pensata mobile-first.
+// Palette: arancione = --secondary.
 //
 // Il muro è generato lato server come SVG (running bond, mattoni sfalsati): funziona anche senza JS.
 // Lo script is:inline aggiunge solo la rivelazione riga-per-riga allo scroll.
@@ -48,11 +48,9 @@ const mobileBands  = buildWall(10, 100, 20, 10, 2);
 
 <figure class="brick-illustration" aria-labelledby="bi-lead-1">
 
+  <!-- Scena 1: il mattoncino solitario.
+       Il testo introduttivo ("Questi sono 50 €…") sta nella pagina, come viz-lead. -->
   <section class="bi-scene bi-scene--one">
-    <p class="bi-kicker">Reddito · Italia 1980 → 2024</p>
-    <p class="bi-lead" id="bi-lead-1">
-      Questi sono <strong>50&nbsp;€</strong>, quelli guadagnati dal <strong>10% più&nbsp;povero</strong> in 45&nbsp;anni.
-    </p>
     <div class="bi-lone-wrap">
       <svg class="bi-lone-brick" viewBox="0 0 20 10" role="img" aria-label="Un mattoncino, pari a 50 euro">
         <rect x="0" y="0" width="20" height="10" rx="0.7" fill="#ff7300"></rect>
@@ -62,8 +60,9 @@ const mobileBands  = buildWall(10, 100, 20, 10, 2);
     <div class="bi-scroll-cue" aria-hidden="true">Scorri<span class="bi-arrow">&darr;</span></div>
   </section>
 
+  <!-- Scena 2: il muro dei 1000 -->
   <section class="bi-scene bi-scene--many">
-    <p class="bi-lead">
+    <p class="bi-lead" id="bi-lead-1">
       Per avere un'idea, questi sono quelli guadagnati dal <strong>10% più&nbsp;ricco</strong>.
     </p>
 
@@ -103,32 +102,27 @@ const mobileBands  = buildWall(10, 100, 20, 10, 2);
     --bi-pos:   var(--secondary, #ff7300);
     --bi-fg:    var(--fg, #1a1a1a);
     --bi-muted: var(--muted, #5b5b5b);
-    --col: 600px;
 
     box-sizing: border-box;
-    max-width: var(--col);
+    /* Allineata al corpo dell'articolo (stessa larghezza di lettura) */
+    max-width: var(--readw, 40rem);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0;
     color: var(--bi-fg);
-    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: var(--font-sans, Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif);
   }
   .brick-illustration *, .brick-illustration *::before, .brick-illustration *::after { box-sizing: border-box; }
 
   /* ---- Scena 1: il mattoncino solitario ---- */
   .bi-scene--one {
-    min-height: 100svh;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 0px 0 48px;
+    min-height: 50svh;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    text-align: center; padding: 0 0 48px;
   }
-  .bi-kicker {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--bi-pos); margin: 0 0 22px;
+
+@media (max-width: 560px) {
+    .bi-scene--one { min-height: 45svh; }
   }
-  .bi-lead {
-    font-size: clamp(20px, 5.2vw, 27px); line-height: 1.32; font-weight: 500;
-    letter-spacing: -0.012em; margin: 0; max-width: 22ch; text-wrap: balance;
-  }
-  .bi-lead strong { font-weight: 700; }
 
   .bi-lone-wrap { margin: clamp(48px, 12vh, 96px) 0 18px; width: 100%; display: flex; justify-content: center; }
   .bi-lone-brick {
@@ -141,24 +135,34 @@ const mobileBands  = buildWall(10, 100, 20, 10, 2);
     to   { opacity: 1; transform: none; }
   }
   .bi-unit {
-    font-size: 12px; color: var(--bi-muted); margin: 0;
+    font-family: var(--font-sans, Inter, system-ui, sans-serif);
+    font-size: 15px; font-weight: 500; color: var(--bi-muted); margin: 0;
     font-variant-numeric: tabular-nums; letter-spacing: 0.01em;
   }
   .bi-scroll-cue {
     margin-top: clamp(20px, 5vh, 80px);
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-    font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bi-muted);
+    display: flex; flex-direction: column; align-items: center; gap: 7px;
+    font-family: var(--font-sans, Inter, system-ui, sans-serif);
+    font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bi-muted);
   }
-  .bi-arrow { font-size: 16px; line-height: 1; letter-spacing: 0; animation: bi-nudge 1.8s ease-in-out infinite; }
+  .bi-arrow { font-size: 19px; line-height: 1; letter-spacing: 0; animation: bi-nudge 1.8s ease-in-out infinite; }
   @keyframes bi-nudge {
     0%, 100% { transform: translateY(0); opacity: .5; }
     50%      { transform: translateY(5px); opacity: 1; }
   }
 
   /* ---- Scena 2: il muro dei 1000 ---- */
-  .bi-scene--many { padding: -10vh 0 18vh; }
-  .bi-scene--many .bi-lead { text-align: left; margin: 0 0 34px; max-width: 26ch; }
-  .bi-scene--many .bi-lead strong { color: var(--bi-pos); }
+  .bi-scene--many { padding: 0 0 18vh; }
+
+  /* Titolo della grafica: stesso stile dei testi-guida dell'articolo, allineato a sinistra */
+  .bi-scene--many .bi-lead {
+    text-align: left;
+    margin: 0 0 34px;
+    font-size: clamp(22px, 3.2vw, 30px); line-height: 1.3;
+    font-weight: 600; letter-spacing: -0.02em; text-wrap: balance;
+    color: var(--bi-fg);
+  }
+  .bi-scene--many .bi-lead strong { font-weight: 800; color: var(--bi-pos); }
 
   .bi-wall-host { width: 100%; }
   .bi-wall-host[data-mobile] { display: none; }
@@ -172,18 +176,16 @@ const mobileBands  = buildWall(10, 100, 20, 10, 2);
   .bi-js .bi-band.in { opacity: 1; transform: none; }
 
   .bi-note {
-    margin: 40px 0 0; font-size: clamp(16px, 4.4vw, 21px); line-height: 1.4;
-    font-weight: 500; letter-spacing: -0.01em; text-align: right; color: var(--bi-fg);
+    margin: 40px 0 0; font-size: clamp(19px, 2.6vw, 24px); line-height: 1.4;
+    font-weight: 600; letter-spacing: -0.01em; text-align: left; color: var(--bi-fg);
   }
   .bi-note strong { font-weight: 700; color: var(--bi-pos); }
 
   /* ---- Mobile: muro 10 × 100, più alto ---- */
   @media (max-width: 560px) {
-    .brick-illustration { padding: 0 18px; }
     .bi-lone-brick { width: calc(20 / 218 * 100%); }   /* identico a un mattoncino del muro mobile */
     .bi-wall-host[data-desktop] { display: none; }
     .bi-wall-host[data-mobile]  { display: block; }
-    .bi-scene--many .bi-note { text-align: left; }
   }
 
   @media (prefers-reduced-motion: reduce) {

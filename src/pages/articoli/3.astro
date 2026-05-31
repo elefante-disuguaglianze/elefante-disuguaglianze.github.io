@@ -3,12 +3,17 @@ import Base from "../../layouts/Base.astro";
 import { site } from "../../content/site";
 import { articles } from "../../content/articles";
 
-import manIconRed from "../../assets/articles/elefant.png";
-import manIconBlue from "../../assets/articles/elefant_blue.png";
+// Entrambi gli elefanti sono arancioni: stessa icona per i due personaggi,
+// distinti dalle etichette col nome (data-name-left / data-name-right).
+import manIcon from "../../assets/articles/elefant.png";
 
 import Mattoncini from "../../components/charts/Mattoncini.astro";
 
 const article = articles.find(a => a.number === 3)!;
+
+const publishedDate = article.publishedAt
+  ? article.publishedAt.toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" })
+  : "";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -26,28 +31,45 @@ const jsonLd = {
   jsonLd={jsonLd}
   ogImage={`${site.url}/images/og/og_article_3.png`}>
 
+  <!-- Masthead editoriale -->
+  <header class="masthead">
+    <p class="masthead__kicker">{publishedDate}</p>
+    <h1 class="masthead__title">L'amara storia dei redditi italiani</h1>
+    <p class="masthead__lead">
+      In quarant'anni i redditi più alti sono cresciuti rapidamente, quelli più
+      bassi sono rimasti quasi fermi.
+    </p>
+    <hr class="masthead__rule" />
+  </header>
+
   <!-- Intro prose -->
-  <article class="prose scrolly-prose">
-    <h1>L'amara storia dei redditi italiani</h1>
+  <article class="prose scrolly-prose scrolly-prose--intro">
     <p>Sono gli anni ‘80 in Italia: alla radio si sente per la prima volta “Maledetta Primavera” di Loretta Goggi, l’Italia vince i mondiali di calcio per la terza volta nella sua storia sportiva e le pagine dei giornali si riempiono di notizie sullo scandalo della loggia massonica P2.</p>
     <p>Da allora, la società italiana è avanzata moltissimo.</p>
     <p>La tua famiglia, con ogni probabilità, è rimasta indietro. Dipende principalmente da quanti soldi avevano i tuoi.</p>
-    <p>Per capire cosa è successo, seguiamo la storia di Alex e Andrea.</p>
   </article>
+
+  <!-- Testo che precede la grafica -->
+  <p class="viz-lead">Per capire cosa è successo, seguiamo la storia di <strong>Alex</strong> e <strong>Andrea</strong>.</p>
 
   <!-- Scrollytelling -->
   <section id="scrolly" aria-label="Racconto visivo interattivo">
     <!-- Pannello grafico sticky -->
-    <div id="sticky-graphic" data-man-src-left={manIconRed.src} data-man-src-right={manIconBlue.src} aria-hidden="true">
+    <div
+      id="sticky-graphic"
+      data-man-src-left={manIcon.src}
+      data-man-src-right={manIcon.src}
+      data-name-left="Andrea"
+      data-name-right="Alex"
+      aria-hidden="true">
       <svg id="chart-3"></svg>
       <noscript>
         <table>
-          <caption>Dati principali</caption>
-          <thead><tr><th>Step</th><th>Valore</th></tr></thead>
+          <caption>Reddito medio annuo (€ a parità di potere d'acquisto, WID)</caption>
+          <thead><tr><th>Gruppo</th><th>1980</th><th>Oggi</th></tr></thead>
           <tbody>
-            <tr><td>0</td><td>—</td></tr>
-            <tr><td>1</td><td>—</td></tr>
-            <tr><td>2</td><td>—</td></tr>
+            <tr><td>10% più povero</td><td>939 €</td><td>988 €</td></tr>
+            <tr><td>10% più ricco</td><td>48.533 €</td><td>94.403 €</td></tr>
           </tbody>
         </table>
       </noscript>
@@ -80,12 +102,11 @@ const jsonLd = {
           <p>Adesso andiamo avanti nel tempo. È il 2024, e il mondo nel frattempo è cambiato. C'è stato il crollo del muro di Berlino, l'attentato alle Torri Gemelle, la pandemia. È nato Internet, e con lui i social media, Wikipedia, il brainrot.</p>
         </div>
       </div>
-            <div class="step" data-step="4" role="listitem">
+      <div class="step" data-step="4" role="listitem">
         <div class="step-content">
           <p>Anche per Andrea e Alex le cose sono cambiate. In un anno ora guadagnano quasi 200mila euro in più!</p>
         </div>
       </div>
-
       <div class="step" data-step="-1" role="listitem">
         <div class="step-content">
           <p>Solo che quasi tutti questi soldi in più sono andati ad Andrea.</p>
@@ -107,188 +128,171 @@ const jsonLd = {
 
   <!-- Outro prose -->
   <article class="prose scrolly-prose">
-    <p>Secondo i dati del World Inequality Database, nel 1980, il 10% più povero degli italiani percepiva in media 939 euro annui a parità di potere d’acquisto, pari allo 0,46% del reddito nazionale. Il 10% più ricco guadagnava invece 48.533 euro, il 23,96% del totale.</p>
+    <p>Secondo i dati del World Inequality Database, nel 1980 il 10% più povero degli italiani percepiva in media 939 euro annui a parità di potere d’acquisto, pari allo 0,46% del reddito nazionale. Il 10% più ricco guadagnava invece 48.533 euro, il 23,96% del totale.</p>
+    <p>Oggi, il 10% più povero arriva a 988 euro: poco più di 50 euro in più in oltre quarant’anni, ma con una quota scesa allo 0,34% del totale. Il 10% più ricco ha visto invece il proprio reddito medio salire a 94.403 euro, quasi 50 mila euro in più, arrivando a detenere il 32,31% del reddito nazionale.</p>
+    <p>In altre parole: <b>i redditi più bassi sono rimasti quasi fermi, mentre quelli più alti sono cresciuti rapidamente.</b> I ricchi sono sempre più ricchi, mentre il resto della popolazione arretra o resta fermo.</p>
+  </article>
 
-<p>Oggi, il 10% più povero arriva a 988 euro: poco più di 50 euro in più in oltre quarant’anni, ma con una quota scesa allo 0,34% del totale. Il 10% più ricco ha visto invece il proprio reddito medio salire a 94.403 euro, quasi 50 mila euro in più, arrivando a detenere il 32,31% del reddito nazionale.</p>
+  <!-- Testo che precede la grafica dei mattoncini -->
+  <p class="viz-lead">Questi sono <strong>50&nbsp;€</strong>, quelli guadagnati dal <strong>10% più&nbsp;povero</strong> in 45&nbsp;anni.</p>
 
-<p>In altre parole: <b>i redditi più bassi sono rimasti quasi fermi, mentre quelli più alti sono cresciuti rapidamente.</b> I ricchi sono sempre più ricchi, mentre il resto della popolazione arretra o resta fermo.</p>
+  <!-- Grafica dei mattoncini -->
+  <Mattoncini/>
 
-<Mattoncini/>
-
-</article>
+  <!-- Fonti / metodologia -->
+  <section class="sources">
+    <hr class="sources__rule" />
+    <p class="sources__title">Fonti e metodo</p>
+    <p>Dati: <a href="https://wid.world/" target="_blank" rel="noopener">World Inequality Database</a> — reddito medio pre-imposte per decili, Italia, a parità di potere d'acquisto. Confronto 1980 → ultimo anno disponibile.</p>
+    <p>Nel grafico ogni punto rappresenta una quota uguale del reddito nazionale; la divisione tra Andrea e Alex è una semplificazione narrativa basata sulle quote reali di reddito dei gruppi. I valori in euro sono arrotondati.</p>
+  </section>
 
 </Base>
 
+<!-- Variabili e stili degli elementi SVG iniettati da JS: devono essere globali -->
+<style is:global>
+  .page__main {
+    --readw: 40rem;        /* larghezza unica del corpo testo */
+    --money: #e8a200;      /* oro: i "soldi" nel grafico */
+  }
+
+  /* Etichette col nome sotto gli elefanti (iniettate da scrollytelling.js) */
+  .man-label {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    fill: var(--fg);
+    paint-order: stroke;
+    stroke: var(--bg);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+  .money { fill: var(--money); }
+  .year-label { fill: var(--secondary); font-family: var(--font-sans); opacity: .16; }
+</style>
+
 <style>
-  /* Breakout dal page__main (max-width: 900px) */
-  #scrolly {
-    --super-rich: var(--secondary);
-    --money : #fff200;
-    position: relative;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    width: 100vw;
+  /* ───────── Masthead editoriale ───────── */
+  .masthead {
+    max-width: var(--readw);
+    margin: 0 auto;
+    padding-top: clamp(40px, 7vh, 80px);
+    padding-bottom: var(--space-4);
   }
-
-  #sticky-graphic {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
+  .masthead__kicker {
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--secondary); margin: 0 0 var(--space-4);
+    display: flex; align-items: center; gap: 10px;
   }
-
-  #chart-3 {
-    display: block;
-    width: 100%;
-    height: 100%;
+  .masthead__title {
+    font-size: clamp(34px, 6vw, 56px); line-height: 1.04;
+    letter-spacing: -0.035em; font-weight: 800; margin: 0 0 var(--space-4);
+    text-wrap: balance;
   }
-
-  #steps {
-    margin-top: -100vh; 
-    position: relative;
-    z-index: 10;
-    pointer-events: none;
+  .masthead__lead {
+    font-size: clamp(19px, 2.4vw, 22px); line-height: 1.5; color: var(--muted);
+    margin: 0 0 var(--space-5); max-width: 60ch; font-weight: 450;
   }
+  .masthead__rule { height: 1px; background: var(--border); border: 0; margin: 0; }
 
-  @media (min-width: 600px) {
-    #steps {
-      margin-top: -60vh;
-    }
-  }
-
-  .step {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: clamp(1rem, 5vw, 4rem);
-  }
-
-  .step[data-step="0"] {
-    align-items: flex-start;
-    padding-top: clamp(1.5rem, 30vh, 5rem);
-  }
-
-  .step-content {
-    pointer-events: all;
-    max-width: 320px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: var(--space-4);
-    box-shadow: 0 2px 12px rgba(0,0,0,.06);
-  }
-
-  .step-content p {
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.6;
-    color: var(--fg);
-  }
-
-
-
-  /* Step attivo evidenziato */
-  .step.is-active .step-content {
-    border-color: var(--link);
-  }
-
-  #steps-spacer {
-    height: 100vh;
-  }
-
-  /* Prose separata dal scrolly */
+  /* ───────── Prose attorno allo scrolly ───────── */
   .scrolly-prose {
-    max-width: 65ch;
+    max-width: var(--readw);
     margin-left: auto;
     margin-right: auto;
     padding-top: var(--space-5);
     padding-bottom: var(--space-5);
   }
+  .scrolly-prose--intro { padding-bottom: var(--space-3); }
+  .scrolly-prose p { font-size: 19px; line-height: 1.62; }
 
-  article.scrolly-prose:first-of-type {
-    padding-bottom: var(--space-3);
+  /* Testo guida prima di ogni grafica — uniforme, allineato a sinistra */
+  .viz-lead {
+    max-width: var(--readw);
+    margin: 0 auto;
+    padding: var(--space-4) 0 0;
+    font-size: clamp(22px, 3.2vw, 30px); line-height: 1.3;
+    font-weight: 600; letter-spacing: -0.02em;
+    text-wrap: balance; color: var(--fg);
   }
+  .viz-lead strong { font-weight: 800; color: var(--secondary); }
 
-  @media (max-width: 600px) {
-    .step-content p {
-      font-size: 18px;
-    }
+  /* ───────── Scrollytelling (breakout dal page__main) ───────── */
+  #scrolly {
+    position: relative;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 100vw;
   }
-
-  /* Accordion per il DistChart */
-  .chart-accordion {
-    border-top: 2px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    margin: var(--space-4) 0;
-  }
-
-  .chart-accordion__summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    padding: var(--space-3) 0;
-    cursor: pointer;
-    list-style: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .chart-accordion__summary::-webkit-details-marker { display: none; }
-  .chart-accordion__summary::marker { display: none; }
-
-  .chart-accordion__label {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .chart-accordion__title {
-    font-size: 1rem;
-    font-weight: 600;
+  #sticky-graphic {
+    position: sticky; top: 0;
+    height: 100vh; height: 100svh;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg);
     color: var(--fg);
-    line-height: 1.2;
   }
+  #chart-3 { display: block; width: 100%; height: 100%; }
 
-  .chart-accordion__subtitle {
-    font-size: 0.75rem;
-    color: var(--muted);
+  #steps {
+    margin-top: -90vh;
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
   }
+  @media (min-width: 600px) { #steps { margin-top: -60vh; } }
 
-  .chart-accordion__chevron {
-    flex-shrink: 0;
-    color: var(--muted);
-    transition: transform 0.2s ease;
+  .step {
+    min-height: 100vh; min-height: 100svh;
+    display: flex; align-items: center; justify-content: flex-start;
+    padding-left: clamp(1rem, 5vw, 4rem);
   }
-
-  .chart-accordion[open] .chart-accordion__chevron {
-    transform: rotate(180deg);
+  .step[data-step="0"] {
+    align-items: flex-start;
+    padding-top: clamp(1.5rem, 30vh, 5rem);
   }
-
-  .chart-accordion__summary:focus-visible {
-    outline: 2px solid var(--link);
-    outline-offset: 3px;
-    border-radius: 3px;
+  .step-content {
+    pointer-events: all;
+    max-width: 340px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: 10px;
+    padding: var(--space-4);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
+    transition: border-color .3s ease, box-shadow .3s ease;
   }
-
-  .chart-accordion__body {
-    padding-bottom: var(--space-3);
+  .step-content p { margin: 0; font-size: 18px; line-height: 1.6; color: var(--fg); }
+  .step-content p b { font-weight: 700; }
+  .step.is-active .step-content {
+    border-color: var(--border);
+    border-left-color: var(--secondary);
+    box-shadow: 0 12px 36px rgba(255, 115, 0, .14);
   }
+  #steps-spacer { height: 100vh; height: 100svh; }
 
-  @media (hover: hover) {
-    .chart-accordion__summary:hover .chart-accordion__title {
-      color: var(--link);
-    }
+  /* ───────── Nota fonti / metodologia ───────── */
+  .sources {
+    max-width: var(--readw);
+    margin: 0 auto;
+    padding: var(--space-5) 0 var(--space-4);
   }
-
+  .sources__rule { height: 1px; background: var(--border); border: 0; margin: 0 0 var(--space-4); }
+  .sources__title {
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 var(--space-3);
+  }
+  .sources p { font-size: 13.5px; line-height: 1.6; color: var(--muted); margin: 0 0 var(--space-2); }
+  .sources a { color: var(--secondary); text-decoration: none; }
+  .sources a:hover { text-decoration: underline; }
 </style>
 
+<!-- scrollytelling.js è invariato: IIFE che usa d3 e scrollama globali.
+     Mettilo in public/scrollytelling.js e carica prima le due librerie. -->
+<script is:inline src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script is:inline src="https://cdn.jsdelivr.net/npm/scrollama@3.2.0/build/scrollama.min.js"></script>
 <script>
-  import "../../scripts/scrollytelling_3";
-
+  import "../../scripts/scrollytelling_3.js";
 </script>
