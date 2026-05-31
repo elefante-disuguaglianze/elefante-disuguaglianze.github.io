@@ -13,11 +13,11 @@ export type Article = {
 
 export const articles: Article[] = [
   {
-    number: 1,
+    number: 3,
     title: "STORYBOARD",
     description:
       "STORYBOARD redditi.",
-    href: "articoli/1",
+    href: "articoli/3",
     published: true,
     publishedAt: new Date("2026-05-10"),
   },
