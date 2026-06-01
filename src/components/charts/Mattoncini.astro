@@ -57,7 +57,7 @@ const mobileBands  = buildWall(10, 100, 20, 10, 2);
       </svg>
     </div>
     <p class="bi-unit">1 mattoncino = 50&nbsp;€</p>
-    <div class="bi-scroll-cue" aria-hidden="true">Scorri<span class="bi-arrow">&darr;</span></div>
+
   </section>
 
   <!-- Scena 2: il muro dei 1000 -->
@@ -139,17 +139,7 @@ const mobileBands  = buildWall(10, 100, 20, 10, 2);
     font-size: 15px; font-weight: 500; color: var(--bi-muted); margin: 0;
     font-variant-numeric: tabular-nums; letter-spacing: 0.01em;
   }
-  .bi-scroll-cue {
-    margin-top: clamp(20px, 5vh, 80px);
-    display: flex; flex-direction: column; align-items: center; gap: 7px;
-    font-family: var(--font-sans, Inter, system-ui, sans-serif);
-    font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bi-muted);
-  }
-  .bi-arrow { font-size: 19px; line-height: 1; letter-spacing: 0; animation: bi-nudge 1.8s ease-in-out infinite; }
-  @keyframes bi-nudge {
-    0%, 100% { transform: translateY(0); opacity: .5; }
-    50%      { transform: translateY(5px); opacity: 1; }
-  }
+
 
   /* ---- Scena 2: il muro dei 1000 ---- */
   .bi-scene--many { padding: 0 0 18vh; }
@@ -190,7 +180,7 @@ const mobileBands  = buildWall(10, 100, 20, 10, 2);
 
   @media (prefers-reduced-motion: reduce) {
     .bi-js .bi-band { opacity: 1; transform: none; transition: none; }
-    .bi-lone-brick, .bi-arrow { animation: none; }
+    .bi-lone-brick { animation: none; }
   }
 </style>
 
